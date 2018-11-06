@@ -1,0 +1,30 @@
+{
+    "name": "tizis/laraComments",
+    "description": "Comments for Laravel.",
+    "keywords": ["laravel", "comments"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tizis"
+        }
+    ],
+    "require": {
+        "php": "7.2.*",
+        "illuminate/support": "5.*",
+        "illuminate/database": "5.*",
+        "illuminate/http": "5.*",
+        "erusev/parsedown": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "tizis\\laraComments\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "tizis\\laraComments\\ServiceProvider"
+            ]
+        }
+    }
+}
