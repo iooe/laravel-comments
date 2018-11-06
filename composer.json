@@ -23,7 +23,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "tizis\\laraComments\\ServiceProvider"
+                "tizis\\laraComments\\Providers\\ServiceProvider",
+                "tizis\\laraComments\\Providers\\AuthServiceProvider"
             ]
         }
     }

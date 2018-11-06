@@ -1,6 +1,6 @@
 <?php
 
-namespace tizis\laraComments;
+namespace tizis\laraComments\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
