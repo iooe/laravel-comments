@@ -7,7 +7,7 @@
 @endif
 <ul class="list-unstyled">
     @foreach($comments as $comment)
-        @include('comments::_comment')
+        @include('comments::comment._comment')
     @endforeach
 </ul>
 @auth
