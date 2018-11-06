@@ -21,7 +21,7 @@ class CommentPolicy
      * @param Comment $comment
      * @return bool
      */
-    public function update($user, Comment $comment):bool
+    public function edit($user, Comment $comment):bool
     {
         return $user->id === $comment->commenter_id;
     }
@@ -32,7 +32,7 @@ class CommentPolicy
      */
     public function reply($user, Comment $comment):bool
     {
-        dd(1);
-        return $user->id !== $comment->commenter_id;
+        return true;
+        //return $user->id !== $comment->commenter_id;
     }
 }

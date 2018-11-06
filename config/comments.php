@@ -2,5 +2,6 @@
 
 return [
     // The model which creates the comments aka the User model
-    'commenter' => \App\User::class
+    'commenter' => \App\User::class,
+    'ui' => 'bootstrap4'
 ];

@@ -26,5 +26,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::resource('comments', CommentPolicy::class, [
+            'delete' => 'delete',
+            'reply' => 'reply',
+            'edit' => 'edit'
+        ]);
     }
 }

@@ -43,7 +43,7 @@ class CommentsController extends Controller
      */
     public function update(EditRequest $request, Comment $comment)
     {
-        $this->authorize('edit-comment', $comment);
+        $this->authorize('comments.edit', $comment);
         $comment->updateComment($request->message);
 
         return redirect()->to(url()->previous() . '#comment-' . $comment->id);
@@ -57,7 +57,7 @@ class CommentsController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $this->authorize('delete-comment', $comment);
+        $this->authorize('comments.delete', $comment);
 
         $comment->delete();
 
@@ -71,7 +71,7 @@ class CommentsController extends Controller
      */
     public function reply(Request $request, Comment $comment)
     {
-        $this->authorize('reply-to-comment', $comment);
+        $this->authorize('comments.reply', $comment);
 
         $this->validate($request, [
             'message' => 'required|string'
