@@ -15,12 +15,12 @@ class ServiceProvider extends LaravelServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
 
         $this->publishes([
-            __DIR__ . '/../config/comments.php' => config_path('comments.php'),
+            __DIR__ . '../../config/comments.php' => config_path('comments.php'),
         ], 'config');
 
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        $this->loadRoutesFrom(__DIR__ . '../routes.php');
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
+        $this->loadViewsFrom(__DIR__ . '../../resources/views', 'comments');
 
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/comments'),
