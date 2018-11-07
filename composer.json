@@ -29,7 +29,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "tizis\\laraComments\\Tests\\": "tests"
+      "tizis\\laraComments\\Tests\\": "tests/",
+      "tizis\\laraComments\\Database\\Seeds": "database/seeds/"
     }
   },
   "extra": {

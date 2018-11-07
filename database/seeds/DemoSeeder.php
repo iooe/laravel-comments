@@ -1,5 +1,5 @@
 <?php
-//namespace tizis\laraComments\Database\Seeds;
+namespace tizis\laraComments\Database\Seeds;
 
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
