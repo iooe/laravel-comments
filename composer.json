@@ -32,6 +32,7 @@
       "tizis\\laraComments\\Tests\\": "tests/",
       "tizis\\laraComments\\Database\\Seeds": "database/seeds/"
     }
+
   },
   "extra": {
     "laravel": {

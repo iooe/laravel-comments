@@ -2,28 +2,30 @@
 
 use Faker\Generator as Faker;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
 
+use App\Entity\Ranobe;
+use App\Entity\User;
+use App\Entity\Comment;
 
-$factory->define(config('comments.testing.seeding.commentable'), function (Faker $faker) {
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-    $user = config('comments.testing.seeding.commenter')::orderByRaw('RAND()')->first();
-    $post = config('comments.testing.seeding.commentable')::orderByRaw('RAND()')->first();
+$factory->define(\App\Entity\Comment::class, function (Faker $faker) {
 
-    return [
-        'commenter_id' => $user->id,
-        'commentable_type' => config('comments.testing.seeding.commentable'),
-        'commentable_id' => $post->id,
-        'comment' => $faker->macAddress,
-        'child_id' => null,
-    ];
+        $post = Ranobe::orderByRaw('RAND()')->first();
+        $user = User::orderByRaw('RAND()')->first();
+
+        $commentableId = $post->id;
+        $childId = null;
+        if (random_int(0, 1)) {
+            $parentComment = Comment::orderByRaw('RAND()')->first();
+            $childId = $parentComment->id;
+            $commentableId = $parentComment->commentable_id;
+        }
+        return [
+            'commenter_id' => $user->id,
+            'commentable_type' => App\Entity\Ranobe::class,
+            'commentable_id' => $commentableId,
+            'comment' => $faker->text,
+            'child_id' => $childId,
+        ];
 });
