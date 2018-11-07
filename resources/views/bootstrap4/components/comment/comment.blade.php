@@ -28,16 +28,15 @@
             @endcan
         </p>
 
-        @include('comments::components::comment._forms')
+        @include('comments::components.comment.forms')
         <br />
 
         @foreach($comment->children as $child)
-            @include('comments::_comment', [
-                'comment' => $child,
-                'reply' => true
-            ])
+            @include('comments::components.comment.comment', [
+                    'comment' => $child,
+                    'reply' => true
+                ])
         @endforeach
     </div>
 
       {!! isset($reply) && $reply === true ? '</div>' : '</li>' !!}
-@endif

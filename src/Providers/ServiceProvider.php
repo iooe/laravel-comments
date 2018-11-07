@@ -27,7 +27,7 @@ class ServiceProvider extends LaravelServiceProvider
         /**
          * Load some stuff
          */
-        $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         $this->loadRoutesFrom(__DIR__ . '/../routes.php');
 

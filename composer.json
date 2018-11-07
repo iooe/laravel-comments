@@ -1,31 +1,43 @@
 {
-    "name": "tizis/lara-comments",
-    "description": "Comments for Laravel.",
-    "keywords": ["laravel", "comments"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "tizis"
-        }
-    ],
-    "require": {
-        "php": "7.2.*",
-        "illuminate/support": "5.*",
-        "illuminate/database": "5.*",
-        "illuminate/http": "5.*",
-        "erusev/parsedown": "^1.7"
-    },
-    "autoload": {
-        "psr-4": {
-            "tizis\\laraComments\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "tizis\\laraComments\\Providers\\ServiceProvider",
-                "tizis\\laraComments\\Providers\\AuthServiceProvider"
-            ]
-        }
+  "name": "tizis/lara-comments",
+  "description": "Comments for Laravel.",
+  "keywords": [
+    "laravel",
+    "comments"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "tizis"
     }
+  ],
+  "require": {
+    "php": "^7.1",
+    "illuminate/support": "5.*",
+    "illuminate/database": "5.*",
+    "illuminate/http": "5.*",
+    "erusev/parsedown": "^1.7"
+  },
+  "require-dev": {
+    "orchestra/testbench": "~3.0",
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "tizis\\laraComments\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "tizis\\laraComments\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "tizis\\laraComments\\Providers\\ServiceProvider",
+        "tizis\\laraComments\\Providers\\AuthServiceProvider"
+      ]
+    }
+  }
 }
