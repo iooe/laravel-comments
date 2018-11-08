@@ -35,6 +35,57 @@ class Comment extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Returns all comments that this comment is the parent of.
+     */
+    public function children()
+    {
+        return $this->hasMany(Comment::class, 'child_id');
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeParentless($query)
+    {
+        return $query->doesntHave('parent');
+    }
+
+    /**
+     * @param string $message
+     * @return Comment
+     */
+    public function updateComment(string $message): Comment
+    {
+        $this->update([
+            'comment' => $message
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param $user
+     * @param $model
+     * @param string $message
+     * @param null $parent
+     * @return Comment
+     */
+    public function createComment($user, $model, string $message, $parent = null): Comment
+    {
+
+        $this->commenter()->associate($user);
+        $this->commentable()->associate($model);
+        if ($parent !== null) {
+            $this->parent()->associate($parent);
+        }
+        $this->comment = $message;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
      * The user who posted the comment.
      */
     public function commenter()
@@ -51,59 +102,10 @@ class Comment extends Model
     }
 
     /**
-     * Returns all comments that this comment is the parent of.
-     */
-    public function children()
-    {
-        return $this->hasMany(Comment::class, 'child_id');
-    }
-
-    /**
      * Returns the comment to which this comment belongs to.
      */
     public function parent()
     {
         return $this->belongsTo(Comment::class, 'child_id');
-    }
-
-    /**
-     * @param $query
-     * @return mixed
-     */
-    public function scopeParentless($query)
-    {
-        return $query->doesntHave('parent');
-    }
-
-    /**
-     * @param string $message
-     * @return Comment
-     */
-    public function updateComment(string $message):Comment {
-        $this->update([
-            'comment' => $message
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param $user
-     * @param $model
-     * @param string $message
-     * @param null $parent
-     * @return Comment
-     */
-    public function createComment($user, $model, string $message, $parent = null):Comment {
-
-        $this->commenter()->associate($user);
-        $this->commentable()->associate($model);
-        if ($parent !== null) {
-            $this->parent()->associate($parent);
-        }
-        $this->comment = $message;
-        $this->save();
-
-        return $this;
     }
 }

@@ -5,12 +5,17 @@ namespace tizis\laraComments\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use tizis\laraComments\Contracts\ICommentable;
 
 class ServiceProvider extends LaravelServiceProvider
 {
 
     public function boot()
     {
+        $this->app->bind(
+            ICommentable::class
+        );
+
         /**
          * Publishers
          */
@@ -23,7 +28,6 @@ class ServiceProvider extends LaravelServiceProvider
             __DIR__ . '/../../resources/views/' . config('comments.ui') => resource_path('views/vendor/comments'),
         ], 'views');
 
-        /**
         /**
          * Load some stuff
          */

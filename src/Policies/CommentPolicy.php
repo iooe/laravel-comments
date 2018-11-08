@@ -11,7 +11,7 @@ class CommentPolicy
      * @param Comment $comment
      * @return bool
      */
-    public function delete($user, Comment $comment):bool
+    public function delete($user, Comment $comment): bool
     {
         return $user->id === $comment->commenter_id && \count($comment->children) === 0;
     }
@@ -21,16 +21,17 @@ class CommentPolicy
      * @param Comment $comment
      * @return bool
      */
-    public function edit($user, Comment $comment):bool
+    public function edit($user, Comment $comment): bool
     {
         return $user->id === $comment->commenter_id;
     }
+
     /**
      * @param $user
      * @param Comment $comment
      * @return bool
      */
-    public function reply($user, Comment $comment):bool
+    public function reply($user, Comment $comment): bool
     {
         return true;
         //return $user->id !== $comment->commenter_id;

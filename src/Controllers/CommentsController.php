@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Requests\EditRequest;
 use tizis\laraComments\Requests\SaveRequest;
+use tizis\laraComments\UseCases\CommentService;
 
 class CommentsController extends Controller
 {
@@ -28,10 +29,24 @@ class CommentsController extends Controller
      */
     public function store(SaveRequest $request, Comment $comment)
     {
-        $model = $request->commentable_type::findOrFail($request->commentable_id);
-        $comment = $comment->createComment(auth()->user(), $model, $request->message);
+        $modelPath = $request->commentable_type;
 
+        if (!CommentService::classExists($modelPath)) {
+            throw new \DomainException('Model don\'t exists');
+        }
+
+        $model = new $modelPath;
+
+        // $request->commentable_type
+
+        if (!CommentService::isCommentable($model)) {
+            throw new \DomainException('Model is\'t commentable');
+        }
+
+        $model = $model::findOrFail($request->commentable_id);
+        $comment = $comment->createComment(auth()->user(), $model, $request->message);
         return redirect()->to(url()->previous() . '#comment-' . $comment->id);
+
     }
 
     /**

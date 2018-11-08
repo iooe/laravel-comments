@@ -11,6 +11,15 @@ use tizis\laraComments\Entity\Comment;
 trait Commentable
 {
     /**
+     * @return bool
+     */
+
+    public function isCommentable(): bool
+    {
+        return true;
+    }
+
+    /**
      * Returns all comments for this model.
      */
     public function comments()

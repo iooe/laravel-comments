@@ -2,8 +2,8 @@
 
 namespace tizis\laraComments\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Policies\CommentPolicy;
 
