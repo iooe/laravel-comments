@@ -45,7 +45,7 @@ class CommentsController extends Controller
 
         $model = $model::findOrFail($request->commentable_id);
         $comment = $comment->createComment(auth()->user(), $model, $request->message);
-        return $request->ajax() ? ['status' => true] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        return $request->ajax() ? ['success' => true] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
 
 
     }
@@ -62,7 +62,7 @@ class CommentsController extends Controller
         $this->authorize('comments.edit', $comment);
         $comment->updateComment($request->message);
 
-        return $request->ajax() ? ['status' => true] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        return $request->ajax() ? ['success' => true] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
 
     }
 
@@ -77,7 +77,7 @@ class CommentsController extends Controller
         $this->authorize('comments.delete', $comment);
         $comment->delete();
 
-        return $request->ajax() ? ['status' => true] : redirect()->back();
+        return $request->ajax() ? ['success' => true] : redirect()->back();
     }
 
     /**
@@ -95,7 +95,7 @@ class CommentsController extends Controller
 
         $reply = (new Comment)->createComment(auth()->user(), $comment->commentable, $request->message, $comment);
 
-        return $request->ajax() ? ['status' => true] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
+        return $request->ajax() ? ['success' => true] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
 
     }
 }
