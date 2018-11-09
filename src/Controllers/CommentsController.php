@@ -60,9 +60,14 @@ class CommentsController extends Controller
     public function update(EditRequest $request, Comment $comment)
     {
         $this->authorize('comments.edit', $comment);
+
+        // todo ... message filter
+
         $comment->updateComment($request->message);
 
-        return $request->ajax() ? ['success' => true] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        return $request->ajax()
+            ? ['success' => true, 'comment' => $comment->comment]
+            : redirect()->to(url()->previous() . '#comment-' . $comment->id);
 
     }
 
