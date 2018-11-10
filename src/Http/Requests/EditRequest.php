@@ -1,6 +1,6 @@
 <?php
 
-namespace tizis\laraComments\Requests;
+namespace tizis\laraComments\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
