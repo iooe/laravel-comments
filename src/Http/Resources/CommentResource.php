@@ -17,11 +17,13 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'comment' => $this->comment,
             'created_at' => $this->created_at->timestamp,
-            'children' => self::collection($this->children),
+            'commenter_id' => $this->commenter_id,
             'commenter' => [
+                'id' => $this->commenter->id,
                 'name' => $this->commenter->name,
                 'email' => $this->commenter->email
-            ]
+            ],
+            'children' => self::collection($this->children)
         ];
     }
 }

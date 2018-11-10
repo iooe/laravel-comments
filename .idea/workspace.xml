@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="788a52ba-5ac8-43ba-9069-09e62087ffcc" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Http/Requests/GetRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Http/Resources/CommentResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/randy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/randy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/laraComments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laraComments.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/CommentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Controllers/CommentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Requests/EditRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Requests/EditRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Requests/SaveRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Requests/SaveRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Http/Resources/CommentResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Resources/CommentResource.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -64,8 +56,8 @@
       <file leaf-file-name="CommentResource.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Http/Resources/CommentResource.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+            <state relative-caret-position="306">
+              <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
               <folding>
                 <element signature="e#53#101#0#PHP" expanded="true" />
               </folding>
@@ -352,15 +344,15 @@
       <workItem from="1541688831681" duration="599000" />
       <workItem from="1541741405012" duration="598000" />
       <workItem from="1541755766398" duration="3598000" />
-      <workItem from="1541823559393" duration="3571000" />
+      <workItem from="1541823559393" duration="3999000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48340000" />
+    <option name="totallyTimeSpent" value="48768000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="32" width="1696" height="1026" extended-state="7" />
+    <frame x="-8" y="32" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -723,8 +715,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Http/Resources/CommentResource.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        <state relative-caret-position="306">
+          <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
           <folding>
             <element signature="e#53#101#0#PHP" expanded="true" />
           </folding>
