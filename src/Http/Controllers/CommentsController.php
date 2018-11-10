@@ -66,12 +66,12 @@ class CommentsController extends Controller
 
         $model = $modelPath::where(['id' => $modelId])->first();
 
-        $count = $model->comments()->parentless()->count();
+        $count = $model->comments()->count();
         $comments = $model->comments()->parentless()->get();
 
         $resource = CommentResource::collection($comments);
 
-        return ['success' => true, 'comments' => $resource];
+        return ['success' => true, 'comments' => $resource, 'count' => $count];
     }
 
 
