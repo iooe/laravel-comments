@@ -1,4 +1,3 @@
-@inject('markdown', 'Parsedown')
 
 @if(isset($reply) && $reply === true)
   <div id="comment-{{ $comment->id }}" class="media">
@@ -9,7 +8,7 @@
     <div class="media-body">
         <h5 class="mt-0 mb-1">{{ $comment->commenter->name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small></h5>
         <div style="white-space: pre-wrap;">
-            {!! $markdown->line($comment->comment) !!}
+            {!! $comment->comment!!}
         </div>
 
         <p>

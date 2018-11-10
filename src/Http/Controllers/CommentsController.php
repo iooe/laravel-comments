@@ -32,6 +32,7 @@ class CommentsController extends Controller
     public function store(SaveRequest $request, Comment $comment)
     {
         $modelPath = $request->commentable_type;
+        $message = CommentService::htmlFilter($request->message);
 
         if (!CommentService::classExists($modelPath)) {
             throw new \DomainException('Model don\'t exists');
@@ -44,7 +45,7 @@ class CommentsController extends Controller
         }
 
         $model = $model::findOrFail($request->commentable_id);
-        $comment = $comment->createComment(auth()->user(), $model, $request->message);
+        $comment = $comment->createComment(auth()->user(), $model, $message);
         $resource = new CommentResource($comment);
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
@@ -86,9 +87,9 @@ class CommentsController extends Controller
     {
         $this->authorize('comments.edit', $comment);
 
-        // todo ... message filter
+        $message = CommentService::htmlFilter($request->message);
 
-        $comment->updateComment($request->message);
+        $comment->updateComment($message);
         $resource = new CommentResource($comment);
 
         return $request->ajax()
@@ -124,7 +125,9 @@ class CommentsController extends Controller
             'message' => 'required|string'
         ]);
 
-        $reply = (new Comment)->createComment(auth()->user(), $comment->commentable, $request->message, $comment);
+        $message = CommentService::htmlFilter($request->message);
+
+        $reply = (new Comment)->createComment(auth()->user(), $comment->commentable, $message, $comment);
         $resource = new CommentResource($reply);
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
 

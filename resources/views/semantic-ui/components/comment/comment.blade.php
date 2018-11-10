@@ -1,4 +1,4 @@
-@inject('markdown', 'Parsedown')
+
 
 @if(isset($reply) && $reply === true)
   <div class="comments threaded" id="comment-{{ $comment->id }}">
