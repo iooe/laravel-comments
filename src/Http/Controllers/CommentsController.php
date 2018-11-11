@@ -50,7 +50,7 @@ class CommentsController extends Controller
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
 
-    public function get(GetRequest $request):array
+    public function get(GetRequest $request): array
     {
         $modelPath = $request->commentable_type;
         $modelId = $request->commentable_id;
@@ -107,9 +107,15 @@ class CommentsController extends Controller
     public function destroy(Request $request, Comment $comment)
     {
         $this->authorize('comments.delete', $comment);
-        $comment->delete();
+        $response = ['success' => true];
 
-        return $request->ajax() ? ['success' => true] : redirect()->back();
+        if (!$comment->children()->exists()) {
+            $comment->delete();
+        } else {
+            $response = ['success' => false, 'message' => 'Comment has replies'];
+        }
+
+        return $request->ajax() ? $response : redirect()->back();
     }
 
     /**
@@ -129,7 +135,7 @@ class CommentsController extends Controller
 
         $reply = (new Comment)->createComment(auth()->user(), $comment->commentable, $message, $comment);
         $resource = new CommentResource($reply);
-        return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
 
+        return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
     }
 }
