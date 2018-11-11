@@ -7,7 +7,11 @@ use tizis\laraComments\Contracts\ICommentable;
 class CommentService
 {
     public static function htmlFilter($message) {
-        return  clean($message, ['HTML.Allowed' => config('comments.purifier.HTML_Allowed')]);
+        $message = '<p>'.str_replace("\n", '</p><p>', $message).'</p>';
+        return  clean($message, [
+            'HTML.Allowed' => config('comments.purifier.HTML_Allowed'),
+            'AutoFormat.RemoveEmpty' => true
+        ]);
     }
 
     public static function classExists($class): bool
