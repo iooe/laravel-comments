@@ -5,7 +5,7 @@ This package can be used to comment on any model you have in your application.
   
 All comments are stored in a single table with a polymorphic relation for content and a one-to-many relation for the user who posted the comment.  
 
-Example is php realization - is bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library). 
+Example with backend render realization - is bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library). 
   
 ### Features  
   
@@ -14,7 +14,7 @@ Example is php realization - is bad way. Good way is using api for get data thro
 - [x] Delete comment  
 - [x] Edit comment  
 - [x] Reply to comment  
-- [x] Authorization rules  
+- [x] Authorization rules | with customization
 - [x] View customization  
 - [x] Dispatch events  
 - [x] API for basic function: get, update, delete, create
