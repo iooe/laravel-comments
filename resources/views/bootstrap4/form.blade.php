@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <form method="POST" action="{{ url('comments') }}">
+        <form method="POST" action="{{ route('comments.store') }}">
             @csrf
             <input type="hidden" name="commentable_type" value="\{{ get_class($model) }}" />
             <input type="hidden" name="commentable_id" value="{{ $model->id }}" />
@@ -10,7 +10,6 @@
                 <div class="invalid-feedback">
                     Your message is required.
                 </div>
-                <small class="form-text text-muted"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax">Markdown</a> cheatsheet.</small>
             </div>
             <button type="submit" class="btn btn-sm btn-outline-success text-uppercase">Submit</button>
         </form>
