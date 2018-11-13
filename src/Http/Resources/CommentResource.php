@@ -2,8 +2,8 @@
 
 namespace tizis\laraComments\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentResource extends JsonResource
 {

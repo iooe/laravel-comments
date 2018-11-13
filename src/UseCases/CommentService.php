@@ -3,24 +3,71 @@
 namespace tizis\laraComments\UseCases;
 
 use tizis\laraComments\Contracts\ICommentable;
+use tizis\laraComments\Entity\Comment;
 
 class CommentService
 {
-    public static function htmlFilter($message) {
-        $message = '<p>'.str_replace("\n", '</p><p>', $message).'</p>';
-        return  clean($message, [
+
+    public static function htmlFilter($message)
+    {
+        $message = '<p>' . str_replace("\n", '</p><p>', $message) . '</p>';
+        return clean($message, [
             'HTML.Allowed' => config('comments.purifier.HTML_Allowed'),
             'AutoFormat.RemoveEmpty' => true
         ]);
     }
 
-    public static function classExists($class): bool
-    {
-        return class_exists($class);
-    }
-
     public static function isCommentable($model): bool
     {
         return $model instanceof ICommentable;
+    }
+
+    /**
+     * @param string $message
+     * @return Comment
+     */
+    public function updateComment(Comment $comment, string $message): Comment
+    {
+        $comment->update([
+            'comment' => $message
+        ]);
+
+        return $comment;
+    }
+
+    /**
+     * @param $user
+     * @param $model
+     * @param string $message
+     * @param null $parent
+     * @return Comment
+     */
+    public function createComment($user, ICommentable $model, string $message, $parent = null): Comment
+    {
+
+        $comment = new Comment();
+        $comment->commenter()->associate($user);
+        $comment->commentable()->associate($model);
+
+        if ($parent !== null) {
+            $comment->parent()->associate($parent);
+        }
+
+        $comment->comment = $message;
+        $comment->save();
+
+        return $comment;
+    }
+
+    /**
+     * @param Comment $comment
+     */
+    public function deleteComment(Comment $comment): void
+    {
+        if (!$comment->children()->exists()) {
+            $comment->delete();
+        } else {
+            throw new \DomainException('Comment has replies');
+        }
     }
 }

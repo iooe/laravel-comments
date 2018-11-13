@@ -17,24 +17,26 @@ class CommentsController extends Controller
 {
     use ValidatesRequests, AuthorizesRequests;
 
-    public function __construct()
+    protected $commentService;
+
+    public function __construct(CommentService $commentService)
     {
         $this->middleware(['web', 'auth'], ['except' => ['get']]);
+        $this->commentService = $commentService;
     }
 
     /**
      * Creates a new comment for given model.
      *
      * @param SaveRequest $request
-     * @param Comment $comment
      * @return mixed
      */
-    public function store(SaveRequest $request, Comment $comment)
+    public function store(SaveRequest $request)
     {
         $modelPath = $request->commentable_type;
         $message = CommentService::htmlFilter($request->message);
 
-        if (!CommentService::classExists($modelPath)) {
+        if (!class_exists($modelPath)) {
             throw new \DomainException('Model don\'t exists');
         }
 
@@ -45,8 +47,9 @@ class CommentsController extends Controller
         }
 
         $model = $model::findOrFail($request->commentable_id);
-        $comment = $comment->createComment(auth()->user(), $model, $message);
+        $comment = $this->commentService->createComment(auth()->user(), $model, $message);
         $resource = new CommentResource($comment);
+
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
 
@@ -55,7 +58,7 @@ class CommentsController extends Controller
         $modelPath = $request->commentable_type;
         $modelId = $request->commentable_id;
 
-        if (!CommentService::classExists($modelPath)) {
+        if (!class_exists($modelPath)) {
             throw new \DomainException('Model don\'t exists');
         }
 
@@ -89,7 +92,8 @@ class CommentsController extends Controller
 
         $message = CommentService::htmlFilter($request->message);
 
-        $comment->updateComment($message);
+        $this->commentService->updateComment($comment, $message);
+
         $resource = new CommentResource($comment);
 
         return $request->ajax()
@@ -100,19 +104,19 @@ class CommentsController extends Controller
 
     /**
      * Deletes a comment.
-     *
+     * @param Request $request
      * @param Comment $comment
-     * @return mixed
+     * @return array
      */
     public function destroy(Request $request, Comment $comment)
     {
         $this->authorize('comments.delete', $comment);
-        $response = ['success' => true];
 
-        if (!$comment->children()->exists()) {
-            $comment->delete();
-        } else {
-            $response = ['success' => false, 'message' => 'Comment has replies'];
+        try {
+            $this->commentService->deleteComment($comment);
+            $response = ['success' => true];
+        } catch (\DomainException $e) {
+            $response = ['success' => false, 'message' => $e->getMessage()];
         }
 
         return $request->ajax() ? $response : redirect()->back();
@@ -133,7 +137,7 @@ class CommentsController extends Controller
 
         $message = CommentService::htmlFilter($request->message);
 
-        $reply = (new Comment)->createComment(auth()->user(), $comment->commentable, $message, $comment);
+        $reply = $this->commentService->createComment(auth()->user(), $comment->commentable, $message, $comment);
         $resource = new CommentResource($reply);
 
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $reply->id);

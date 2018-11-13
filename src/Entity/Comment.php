@@ -52,40 +52,6 @@ class Comment extends Model
     }
 
     /**
-     * @param string $message
-     * @return Comment
-     */
-    public function updateComment(string $message): Comment
-    {
-        $this->update([
-            'comment' => $message
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param $user
-     * @param $model
-     * @param string $message
-     * @param null $parent
-     * @return Comment
-     */
-    public function createComment($user, $model, string $message, $parent = null): Comment
-    {
-
-        $this->commenter()->associate($user);
-        $this->commentable()->associate($model);
-        if ($parent !== null) {
-            $this->parent()->associate($parent);
-        }
-        $this->comment = $message;
-        $this->save();
-
-        return $this;
-    }
-
-    /**
      * The user who posted the comment.
      */
     public function commenter()
