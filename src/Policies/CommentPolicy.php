@@ -26,4 +26,15 @@ class CommentPolicy implements ICommentPolicy
     {
         return $user->id === $comment->commenter_id;
     }
+
+
+    /**
+     * @param $user
+     * @param Comment $comment
+     * @return bool
+     */
+    public function reply($user, Comment $comment): bool
+    {
+        return true;
+    }
 }

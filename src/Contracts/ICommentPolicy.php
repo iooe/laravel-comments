@@ -8,4 +8,5 @@ interface ICommentPolicy
 {
     public function edit($user, Comment $comment);
     public function delete($user, Comment $comment);
+    public function reply($user, Comment $comment);
 }

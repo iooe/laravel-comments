@@ -112,7 +112,7 @@ class CommentsController extends Controller
      */
     public function destroy(Request $request, Comment $comment)
     {
-        $this->authorize($this->policyPrefix . 'comments.delete', $comment);
+        $this->authorize($this->policyPrefix . '.delete', $comment);
 
         try {
             $this->commentService->deleteComment($comment);
@@ -131,7 +131,7 @@ class CommentsController extends Controller
      */
     public function reply(Request $request, Comment $comment)
     {
-        $this->authorize('comments.reply', $comment);
+        $this->authorize($this->policyPrefix . '.reply', $comment);
 
         $this->validate($request, [
             'message' => 'required|string'
