@@ -7,6 +7,7 @@ return [
     'purifier' => [
         'HTML_Allowed' => 'p',
     ],
+    'policy_prefix' => 'comments',
     'testing' => [
         'seeding' => [
             'commentable' => 'App\User',

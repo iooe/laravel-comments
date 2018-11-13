@@ -18,11 +18,13 @@ class CommentsController extends Controller
     use ValidatesRequests, AuthorizesRequests;
 
     protected $commentService;
+    protected $policyPrefix;
 
     public function __construct(CommentService $commentService)
     {
         $this->middleware(['web', 'auth'], ['except' => ['get']]);
         $this->commentService = $commentService;
+        $this->policyPrefix = config('comments.policy_prefix');
     }
 
     /**
@@ -88,7 +90,7 @@ class CommentsController extends Controller
      */
     public function update(EditRequest $request, Comment $comment)
     {
-        $this->authorize('comments.edit', $comment);
+        $this->authorize($this->policyPrefix . '.edit', $comment);
 
         $message = CommentService::htmlFilter($request->message);
 
@@ -110,7 +112,7 @@ class CommentsController extends Controller
      */
     public function destroy(Request $request, Comment $comment)
     {
-        $this->authorize('comments.delete', $comment);
+        $this->authorize($this->policyPrefix . 'comments.delete', $comment);
 
         try {
             $this->commentService->deleteComment($comment);

@@ -2,9 +2,10 @@
 
 namespace tizis\laraComments\Policies;
 
+use tizis\laraComments\Contracts\ICommentPolicy;
 use tizis\laraComments\Entity\Comment;
 
-class CommentPolicy
+class CommentPolicy implements ICommentPolicy
 {
     /**
      * @param $user
@@ -24,16 +25,5 @@ class CommentPolicy
     public function edit($user, Comment $comment): bool
     {
         return $user->id === $comment->commenter_id;
-    }
-
-    /**
-     * @param $user
-     * @param Comment $comment
-     * @return bool
-     */
-    public function reply($user, Comment $comment): bool
-    {
-        return true;
-        //return $user->id !== $comment->commenter_id;
     }
 }
