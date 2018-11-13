@@ -63,14 +63,14 @@ Build with bootstrap 4
       
 Publish the config file (optional):      
       
-```
-bash php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=config 
+```bash 
+php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=config 
 ```      
  ### Publish views (customization)      
  The default UI is made for Bootstrap 4, but you can change it however you want.      
       
-```
-bash php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=views 
+```bash 
+php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=views 
 ```      
  ## Usage      
  In the view where you want to display comments, place this code and modify it:      
