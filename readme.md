@@ -95,9 +95,9 @@ If you open the page containing the view where you have placed the above code, y
 |--|--|--| -- | --|
 |Get comments|GET |  /api/comments/ | commentable_type, commentable_id|  route('comments.get') |
 |Store comment| POST | /api/comments/ | commentable_type, commentable_id, message |route('comments.store') | 
-|Delete comment|DELETE|/api/comments/{comment}| -- | route('comments.delete', $comment_id)  |
-|Edit comment|POST|/api/comments/{comment}| message|  route('comments.update', $comment_id)
-|Reply to comment|POST|/api/comments/{comment}| message | route('comments.reply', $comment_id)
+|Delete comment|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
+|Edit comment|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
+|Reply to comment|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
 
 
 
