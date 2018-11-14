@@ -59,7 +59,8 @@ Build with bootstrap 4
  ### Publish Config & configure (optional)        
  In the `config` file you can specify:        
         
-- where is your User model located; the default is `\App\User::class` - policy prefix, you can create custom policy class and implement ICommentPolicy;        
+- where is your User model located; the default is `\App\User::class` 
+- policy prefix, you can create custom policy class and implement ICommentPolicy;        
 - allow tags for html filter      
         
 Publish the config file (optional):        
