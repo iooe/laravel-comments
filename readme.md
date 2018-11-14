@@ -2,9 +2,7 @@
   
 # laraComments      
  This package can be used to comment on any model you have in your application.      
-      
-All comments are stored in a single table with a polymorphic relation for content and a one-to-many relation for the user who posted the comment.      
-    
+          
 Example with backend render realization - is REALY bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library).     
       
 ### Features      
@@ -21,7 +19,10 @@ Example with backend render realization - is REALY bad way. Good way is using ap
       
 ## Requirements - php 7.1 +     
 - laravel 5.5 +    
-## Installation ```bash composer require tizis/lara-comments ``` ### Run migrations      
+## Installation 
+```bash composer require tizis/lara-comments ``` 
+
+### Run migrations      
  We need to create the table for comments.      
       
 ```bash
