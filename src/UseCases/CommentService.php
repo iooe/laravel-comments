@@ -8,6 +8,10 @@ use tizis\laraComments\Entity\Comment;
 class CommentService
 {
 
+    /**
+     * @param $message
+     * @return mixed
+     */
     public static function htmlFilter($message)
     {
         $message = '<p>' . str_replace("\n", '</p><p>', $message) . '</p>';
@@ -17,6 +21,10 @@ class CommentService
         ]);
     }
 
+    /**
+     * @param $model
+     * @return bool
+     */
     public static function isCommentable($model): bool
     {
         return $model instanceof ICommentable;
@@ -37,7 +45,7 @@ class CommentService
 
     /**
      * @param $user
-     * @param $model
+     * @param ICommentable $model
      * @param string $message
      * @param null $parent
      * @return Comment
@@ -61,6 +69,7 @@ class CommentService
 
     /**
      * @param Comment $comment
+     * @throws \Exception
      */
     public function deleteComment(Comment $comment): void
     {

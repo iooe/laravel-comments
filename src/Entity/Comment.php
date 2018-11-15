@@ -36,6 +36,8 @@ class Comment extends Model
 
     /**
      * Returns all comments that this comment is the parent of.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
     {
@@ -53,6 +55,8 @@ class Comment extends Model
 
     /**
      * The user who posted the comment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function commenter()
     {
@@ -61,6 +65,8 @@ class Comment extends Model
 
     /**
      * The model that was commented upon.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable()
     {
@@ -69,6 +75,8 @@ class Comment extends Model
 
     /**
      * Returns the comment to which this comment belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent()
     {

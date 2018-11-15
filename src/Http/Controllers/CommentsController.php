@@ -20,6 +20,10 @@ class CommentsController extends Controller
     protected $commentService;
     protected $policyPrefix;
 
+    /**
+     * CommentsController constructor.
+     * @param CommentService $commentService
+     */
     public function __construct(CommentService $commentService)
     {
         $this->middleware(['web', 'auth'], ['except' => ['get']]);
@@ -31,7 +35,7 @@ class CommentsController extends Controller
      * Creates a new comment for given model.
      *
      * @param SaveRequest $request
-     * @return mixed
+     * @return array|\Illuminate\Http\RedirectResponse
      */
     public function store(SaveRequest $request)
     {
@@ -55,6 +59,10 @@ class CommentsController extends Controller
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
 
+    /**
+     * @param GetRequest $request
+     * @return array
+     */
     public function get(GetRequest $request): array
     {
         $modelPath = $request->commentable_type;
@@ -83,10 +91,10 @@ class CommentsController extends Controller
 
     /**
      * Updates the message of the comment.
-     *
      * @param EditRequest $request
      * @param Comment $comment
-     * @return mixed
+     * @return array|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(EditRequest $request, Comment $comment)
     {
@@ -108,7 +116,8 @@ class CommentsController extends Controller
      * Deletes a comment.
      * @param Request $request
      * @param Comment $comment
-     * @return array
+     * @return array|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Request $request, Comment $comment)
     {
@@ -125,9 +134,13 @@ class CommentsController extends Controller
     }
 
     /**
+     * Reply to comment
+     *
      * @param Request $request
      * @param Comment $comment
-     * @return mixed
+     * @return array|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function reply(Request $request, Comment $comment)
     {

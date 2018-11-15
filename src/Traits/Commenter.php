@@ -12,6 +12,7 @@ trait Commenter
 {
     /**
      * Returns all comments that this user has made.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
