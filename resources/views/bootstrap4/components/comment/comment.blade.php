@@ -6,7 +6,9 @@
 @endif
     <img class="mr-3" src="https://www.gravatar.com/avatar/{{ md5($comment->commenter->email) }}.jpg?s=64" alt="{{ $comment->commenter->name }} Avatar">
     <div class="media-body">
-        <h5 class="mt-0 mb-1">{{ $comment->commenter->name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small></h5>
+        <h5 class="mt-0 mb-1">
+            {{ $comment->commenter->name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small>
+        </h5>
         <div style="white-space: pre-wrap;">
             {!! $comment->comment!!}
         </div>
@@ -24,6 +26,30 @@
                 </form>
             @endcan
         </p>
+            <p>
+               @can('comments.vote', $comment)
+
+                     <form action="{{route('comments.vote', $comment->id)  }}" method="POST" style="display: inline-block">
+                        @csrf
+                        <input type="hidden" name="vote" value="0" />
+                        <button type="submit">
+                            -1
+                        </button>
+                    </form>
+                @endcan
+                    {{$comment->rating()}}
+                @can('comments.vote', $comment)
+
+                    <form action="{{route('comments.vote', $comment->id)  }}" method="POST" style="display: inline-block">
+                        @csrf
+                        <input type="hidden" name="vote" value="1" />
+                        <button type="submit">
+                            +1
+                        </button>
+                    </form>
+                @endcan
+            </p>
+
 
         @include('comments::components.comment.forms')
         <br />
