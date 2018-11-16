@@ -2,6 +2,7 @@
 
 namespace tizis\laraComments\Http\Controllers;
 
+use Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -9,26 +10,32 @@ use Illuminate\Routing\Controller;
 use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Http\Requests\EditRequest;
 use tizis\laraComments\Http\Requests\GetRequest;
+use tizis\laraComments\Http\Requests\ReplyRequest;
 use tizis\laraComments\Http\Requests\SaveRequest;
+use tizis\laraComments\Http\Requests\VoteRequest;
 use tizis\laraComments\Http\Resources\CommentResource;
 use tizis\laraComments\UseCases\CommentService;
+use tizis\laraComments\UseCases\VoteService;
 
 class CommentsController extends Controller
 {
     use ValidatesRequests, AuthorizesRequests;
 
     protected $commentService;
+    protected $voteService;
     protected $policyPrefix;
 
     /**
      * CommentsController constructor.
      * @param CommentService $commentService
+     * @param VoteService $voteService
      */
-    public function __construct(CommentService $commentService)
+    public function __construct(CommentService $commentService, VoteService $voteService)
     {
         $this->middleware(['web', 'auth'], ['except' => ['get']]);
-        $this->commentService = $commentService;
         $this->policyPrefix = config('comments.policy_prefix');
+        $this->commentService = $commentService;
+        $this->voteService = $voteService;
     }
 
     /**
@@ -142,19 +149,32 @@ class CommentsController extends Controller
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function reply(Request $request, Comment $comment)
+    public function reply(ReplyRequest $request, Comment $comment)
     {
         $this->authorize($this->policyPrefix . '.reply', $comment);
-
-        $this->validate($request, [
-            'message' => 'required|string'
-        ]);
-
         $message = CommentService::htmlFilter($request->message);
 
         $reply = $this->commentService->createComment(auth()->user(), $comment->commentable, $message, $comment);
         $resource = new CommentResource($reply);
 
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
+    }
+
+    /**
+     * @param VoteRequest $request
+     * @param Comment $comment
+     * @return array|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Throwable
+     */
+    public function vote(VoteRequest $request, Comment $comment)
+    {
+        $this->authorize($this->policyPrefix . '.vote', $comment);
+
+        $this->voteService->make(Auth::user(), $comment, $request->vote);
+        $rating = $this->commentService->ratingRecalculation($comment);
+        $votesCount = $comment->votesCount();
+
+        return $request->ajax() ? ['success' => true, 'count' => $votesCount] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
 }

@@ -79,4 +79,19 @@ class CommentService
             throw new \DomainException('Comment has replies');
         }
     }
+
+    /**
+     * @param Comment $comment
+     * @return int
+     */
+    public function ratingRecalculation(Comment $comment): int
+    {
+        $rating = 0;
+        foreach ($comment->votes as $vote) {
+            $rating = $vote->commenter_vote === 0 ? $rating - 1 : $rating + 1;
+        }
+        $comment->rating = $rating;
+        $comment->save();
+        return $rating;
+    }
 }

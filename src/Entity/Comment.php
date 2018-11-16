@@ -12,18 +12,8 @@ class Comment extends Model
 {
     use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['comment'];
+    protected $fillable = ['comment', 'rating'];
 
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
     protected $dispatchesEvents = [
         'created' => CommentCreated::class,
         'updated' => CommentUpdated::class,
@@ -82,4 +72,20 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, 'child_id');
     }
+
+    public function rating()
+    {
+        return $this->rating;
+    }
+
+    public function votesCount()
+    {
+        return $this->votes()->count();
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(CommentVotes::class, 'comment_id');
+    }
+
 }
