@@ -12,9 +12,11 @@ use tizis\laraComments\Entity\Comment;
  */
 interface ICommentPolicy
 {
-    public function edit($user, Comment $comment);
+    public function edit($user, $comment);
 
-    public function delete($user, Comment $comment);
+    public function delete($user, $comment);
 
-    public function reply($user, Comment $comment);
+    public function reply($user, $comment);
+
+    public function vote($user, $comment);
 }

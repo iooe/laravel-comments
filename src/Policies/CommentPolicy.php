@@ -9,10 +9,20 @@ class CommentPolicy implements ICommentPolicy
 {
     /**
      * @param $user
-     * @param Comment $comment
+     * @param $comment
      * @return bool
      */
-    public function delete($user, Comment $comment): bool
+    public function delete($user, $comment): bool
+    {
+        return $user->id === $comment->commenter_id;
+    }
+
+    /**
+     * @param $user
+     * @param $comment
+     * @return bool
+     */
+    public function edit($user, $comment): bool
     {
         return $user->id === $comment->commenter_id;
     }
@@ -22,19 +32,18 @@ class CommentPolicy implements ICommentPolicy
      * @param Comment $comment
      * @return bool
      */
-    public function edit($user, Comment $comment): bool
-    {
-        return $user->id === $comment->commenter_id;
-    }
-
-
-    /**
-     * @param $user
-     * @param Comment $comment
-     * @return bool
-     */
-    public function reply($user, Comment $comment): bool
+    public function reply($user, $comment): bool
     {
         return true;
+    }
+
+    /**
+     * @param $user
+     * @param $comment
+     * @return bool
+     */
+    public function vote($user, $comment): bool
+    {
+        return $user->id !== $comment->commenter_id;
     }
 }

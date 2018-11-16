@@ -3,7 +3,6 @@
 namespace tizis\laraComments\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use tizis\laraComments\Contracts\ICommentable;
 
