@@ -5,7 +5,8 @@
             
 Example with backend render realization - is REALY bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library).       
         
-### Features - [x] View comments        
+### Features 
+- [x] View comments        
 - [x] Create comment        
 - [x] Delete comment        
 - [x] Edit comment        
@@ -40,6 +41,58 @@ use Laravelista\Comments\Commenter;
 class User extends Authenticatable {   
 	use ..., Commenter;   
  ``` 
+  ### Create Comment model 
+  
+
+ ```php 
+  
+ use tizis\laraComments\Entity\Comment as laraComment;
+ 
+ class Comment extends laraComment
+ {
+ 
+ }
+ ``` 
+### Custom comment policy
+Create policy class, like this:
+ ```php 
+<?php
+namespace App\Http\Policies;
+
+use App\Entity\Comment;
+
+use tizis\laraComments\Policies\CommentPolicy as CommentPolicyPackage;
+
+class CommentPolicy extends CommentPolicyPackage
+{
+    // rewrite delete rule
+    public function delete($user, $comment): bool
+    {
+        // ever true
+        return true;
+    }
+}
+   ```
+   Register policy in AuthServiceProvider:
+```php 
+use Illuminate\Support\Facades\Gate;
+use App\Http\Policies\CommentPolicy;
+...
+public function boot()
+{
+    Gate::resource('comments_custom', CommentPolicy::class, [
+        'delete' => 'delete',
+        'reply' => 'reply',
+        'edit' => 'edit',
+        'vote' => 'vote'
+    ]);
+}
+```
+Add policy prefix to comments.php config
+```php
+    'policy_prefix' => 'comments_custom',
+```
+
  ### Add Commentable trait to models        
  Add the `Commentable` trait and the `ICommentable` interface to the model for which you want to enable comments for:        
   
