@@ -13,7 +13,8 @@ Example with backend render realization - is REALY bad way. Good way is using ap
 - [x] Reply to comment        
 - [x] Authorization rules | with customization      
 - [x] View customization        
-- [x] Dispatch events        
+- [x] Dispatch events   
+- [x] Likes | Dislikes | Comment rating       
 - [x] API for basic function: get, update, delete, create      
 - [x] HTML filter customization (using HTMLPurifier)      
         
@@ -151,7 +152,7 @@ If you open the page containing the view where you have placed the above code, y
 |Delete comment|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
 |Edit comment|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
 |Reply to comment|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
-
+|Vote to comment|POST|/api/comments/{comment_id}/vote| vote(bool) | route('comments.vote', $comment_id)
 
 
  ## Events        
