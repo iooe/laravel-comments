@@ -175,6 +175,6 @@ class CommentsController extends Controller
         $rating = $this->commentService->ratingRecalculation($comment);
         $votesCount = $comment->votesCount();
 
-        return $request->ajax() ? ['success' => true, 'count' => $votesCount] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
+        return $request->ajax() ? ['success' => true, 'count' => $votesCount, 'rating' => $rating] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
 }
