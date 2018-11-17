@@ -37,7 +37,7 @@ composer require tizis/lara-comments
  Add the `Commenter` trait to your User model so that you can retrieve the comments for a user:        
         
 ```php 
-use Laravelista\Comments\Commenter;  
+use tizis\laraComments\Traits\Commenter;
      
 class User extends Authenticatable {   
 	use ..., Commenter;   
@@ -97,7 +97,8 @@ Add policy prefix to comments.php config
  ### Add Commentable trait to models        
  Add the `Commentable` trait and the `ICommentable` interface to the model for which you want to enable comments for:        
   
- ```php use tizis\laraComments\Contracts\ICommentable;   
+ ```php 
+ use tizis\laraComments\Contracts\ICommentable;
  use tizis\laraComments\Traits\Commentable;     
       
  class Post extends Model implements ICommentable {        
