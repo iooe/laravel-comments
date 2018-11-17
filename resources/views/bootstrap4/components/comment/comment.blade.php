@@ -37,7 +37,7 @@
                         </button>
                     </form>
                 @endcan
-                    {{$comment->rating()}}
+                    rating: {{$comment->rating()}}
                 @can('comments.vote', $comment)
 
                     <form action="{{route('comments.vote', $comment->id)  }}" method="POST" style="display: inline-block">
