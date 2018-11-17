@@ -61,6 +61,7 @@ class CommentService
             $comment->parent()->associate($parent);
         }
 
+        $comment->rating = 0;
         $comment->comment = $message;
         $comment->save();
 

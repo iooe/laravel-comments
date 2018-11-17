@@ -61,6 +61,7 @@ class CommentsController extends Controller
 
         $model = $model::findOrFail($request->commentable_id);
         $comment = $this->commentService->createComment(auth()->user(), $model, $message);
+
         $resource = new CommentResource($comment);
 
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
