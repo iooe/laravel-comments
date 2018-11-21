@@ -12,7 +12,6 @@ use tizis\laraComments\Http\Requests\EditRequest;
 use tizis\laraComments\Http\Requests\GetRequest;
 use tizis\laraComments\Http\Requests\ReplyRequest;
 use tizis\laraComments\Http\Requests\SaveRequest;
-use tizis\laraComments\Http\Requests\VoteRequest;
 use tizis\laraComments\Http\Resources\CommentResource;
 use tizis\laraComments\UseCases\CommentService;
 use tizis\laraComments\UseCases\VoteService;
@@ -60,7 +59,7 @@ class CommentsController extends Controller
         }
 
         $model = $model::findOrFail($request->commentable_id);
-        $comment = $this->commentService->createComment(auth()->user(), $model, $message);
+        $comment = $this->commentService->createComment(Auth::user(), $model, $message);
 
         $resource = new CommentResource($comment);
 
@@ -155,27 +154,10 @@ class CommentsController extends Controller
         $this->authorize($this->policyPrefix . '.reply', $comment);
         $message = CommentService::htmlFilter($request->message);
 
-        $reply = $this->commentService->createComment(auth()->user(), $comment->commentable, $message, $comment);
+        $reply = $this->commentService->createComment(Auth::user(), $comment->commentable, $message, $comment);
         $resource = new CommentResource($reply);
 
         return $request->ajax() ? ['success' => true, 'comment' => $resource] : redirect()->to(url()->previous() . '#comment-' . $reply->id);
     }
 
-    /**
-     * @param VoteRequest $request
-     * @param Comment $comment
-     * @return array|\Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Throwable
-     */
-    public function vote(VoteRequest $request, Comment $comment)
-    {
-        $this->authorize($this->policyPrefix . '.vote', $comment);
-
-        $this->voteService->make(Auth::user(), $comment, $request->vote);
-        $rating = $this->commentService->ratingRecalculation($comment);
-        $votesCount = $comment->votesCount();
-
-        return $request->ajax() ? ['success' => true, 'count' => $votesCount, 'rating' => $rating] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
-    }
 }
