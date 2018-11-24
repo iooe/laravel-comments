@@ -3,7 +3,7 @@
 # laraComments        
  This package can be used to comment on any model you have in your application.        
             
-Example with backend render realization - is REALY bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library).       
+ Example - is realization of backend rendering, this is REALLY bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library).       
         
 ### Features 
 - [x] View comments        
