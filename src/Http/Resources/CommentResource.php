@@ -20,10 +20,18 @@ class CommentResource extends JsonResource
             'rating' => $this->rating,
             'commenter' => [
                 'id' => $this->commenter->id,
+                'avatar' => $this->getAvatar(),
                 'name' => $this->commenter->name,
                 'email' => $this->commenter->email
             ],
             'children' => self::collection($this->children)
         ];
+    }
+
+    protected function getAvatar() {
+        if(method_exists($this->commenter, 'getAvatar')){
+            return $this->commenter->getAvatar();
+        }
+        return null;
     }
 }
