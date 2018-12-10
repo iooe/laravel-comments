@@ -4,6 +4,7 @@ namespace tizis\laraComments\UseCases;
 
 use tizis\laraComments\Contracts\ICommentable;
 use tizis\laraComments\Entity\Comment;
+use tizis\laraComments\Http\Requests\GetRequest;
 
 class CommentService
 {
@@ -31,10 +32,23 @@ class CommentService
     }
 
     /**
+     * @param GetRequest $request
+     * @return array
+     */
+    public static function orderByRequestAdapter(GetRequest $request): array
+    {
+        if ($request->order_by === 'rating') {
+            return ['column' => 'rating', 'direction' => 'desc'];
+        }
+        return ['column' => 'id', 'direction' => 'asc'];
+    }
+
+
+    /**
      * @param string $message
      * @return Comment
      */
-    public function updateComment(Comment $comment, string $message): Comment
+    public static function updateComment(Comment $comment, string $message): Comment
     {
         $comment->update([
             'comment' => $message
@@ -50,7 +64,7 @@ class CommentService
      * @param null $parent
      * @return Comment
      */
-    public function createComment($user, ICommentable $model, string $message, $parent = null): Comment
+    public static function createComment($user, ICommentable $model, string $message, $parent = null): Comment
     {
 
         $comment = new Comment();
@@ -72,7 +86,7 @@ class CommentService
      * @param Comment $comment
      * @throws \Exception
      */
-    public function deleteComment(Comment $comment): void
+    public static function deleteComment(Comment $comment): void
     {
         if (!$comment->children()->exists()) {
             $comment->delete();
@@ -85,7 +99,7 @@ class CommentService
      * @param Comment $comment
      * @return int
      */
-    public function ratingRecalculation(Comment $comment): int
+    public static function ratingRecalculation(Comment $comment): int
     {
         $rating = 0;
         foreach ($comment->votes as $vote) {

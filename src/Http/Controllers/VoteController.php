@@ -22,14 +22,12 @@ class VoteController extends Controller
 
     /**
      * CommentsController constructor.
-     * @param CommentService $commentService
      * @param VoteService $voteService
      */
-    public function __construct(CommentService $commentService, VoteService $voteService)
+    public function __construct(VoteService $voteService)
     {
         $this->middleware(['web', 'auth']);
         $this->policyPrefix = config('comments.policy_prefix');
-        $this->commentService = $commentService;
         $this->voteService = $voteService;
     }
 
@@ -38,7 +36,7 @@ class VoteController extends Controller
         $this->authorize($this->policyPrefix . '.vote', $comment);
 
         $this->voteService->make(Auth::user(), $comment, $request->vote);
-        $rating = $this->commentService->ratingRecalculation($comment);
+        $rating = CommentService::ratingRecalculation($comment);
         $votesCount = $comment->votesCount();
 
         return $request->ajax() ? ['success' => true, 'count' => $votesCount, 'rating' => $rating] : redirect()->to(url()->previous() . '#comment-' . $comment->id);
