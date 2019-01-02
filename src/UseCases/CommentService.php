@@ -8,7 +8,16 @@ use tizis\laraComments\Http\Requests\GetRequest;
 
 class CommentService
 {
-
+    /**
+     * @param int $take
+     * @return mixed
+     */
+    public static function getNewestComments($take = 10) {
+        return Comment::take($take)
+            ->with(['commentable'])
+            ->orderBy('id', 'desc')
+            ->get();
+    }
     /**
      * @param $message
      * @return mixed
