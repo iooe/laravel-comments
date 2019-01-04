@@ -42,7 +42,7 @@ use tizis\laraComments\Traits\Commenter;
 class User extends Authenticatable {   
 	use ..., Commenter;   
  ``` 
-  ### Create Comment model 
+  ### 3. Create Comment model 
   
 
  ```php 
@@ -56,7 +56,7 @@ class User extends Authenticatable {
  ``` 
 
 
- ### 3. Add Commentable trait to models        
+ ### 4. Add Commentable trait to models        
  Add the `Commentable` trait and the `ICommentable` interface to the model for which you want to enable comments for:        
   
  ```php 
@@ -67,7 +67,7 @@ class User extends Authenticatable {
     use Commentable;        
  ```        
  
- ### 4. Custom comment policy [Is not required]
+ ### 5. Custom comment policy [Is not required]
  If you need, you can overwrite default comment policy class:
  
   ```php 
