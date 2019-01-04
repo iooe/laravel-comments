@@ -2,9 +2,7 @@
     
 # laraComments        
  This package can be used to comment on any model you have in your application.        
-            
- Example - is realization of backend rendering, this is REALLY bad way. Good way is using api for get data through JS and build ui with Vue js (or any another library).       
-        
+                    
 ### Features 
 - [x] View comments        
 - [x] Create comment        
@@ -110,10 +108,13 @@ class User extends Authenticatable {
  ```
  
  ## Examples    
-* This repository include only bootstap template, but you can create you own UI.    
-Build with semantic ui    
+This repository include only bootstrap template, but you can create you own UI.
+
+This is examples of comments rendering using backend and this way have bad performance when 100+ comments on post. Good way is using api for get data through ajax and build UI with Vue js (or any another library).    
+
+1. Build with semantic ui    
 ![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
-Build with bootstrap 4    
+2. Build with bootstrap 4    
 ![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
       
  ### Publish Config & configure (optional)        
