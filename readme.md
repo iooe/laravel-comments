@@ -18,7 +18,7 @@
         
 ## Requirements 
 - php 7.1 + 
-- laravel 5.5 +      
+- laravel 5.6 +      
 
 ## Installation 
 ```bash 
