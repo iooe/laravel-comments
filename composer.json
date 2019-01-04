@@ -1,6 +1,6 @@
 {
   "name": "tizis/lara-comments",
-  "description": "Comments system for your Laravel application. Features: HTML filter customization (HTMLPurifier), API, comment rating, events, auth rules ...",
+  "description": "Comments system for your Laravel application. Features: can be used to comment on any model, HTML filter customization (HTMLPurifier), API, comment rating, replies, events, auth rules ...",
   "keywords": [
     "laravel",
     "comments"
