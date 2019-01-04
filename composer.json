@@ -14,9 +14,9 @@
   ],
   "require": {
     "php": "^7.1",
-    "illuminate/support": "5.*",
-    "illuminate/database": "5.*",
-    "illuminate/http": "5.*",
+    "illuminate/support": "^5.6",
+    "illuminate/database": "^5.6",
+    "illuminate/http": "^5.6",
     "mews/purifier": "^2.1"
   },
   "require-dev": {
