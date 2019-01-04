@@ -27,13 +27,13 @@
 composer require tizis/lara-comments 
 ```   
 
-### Run migrations        
+### 1. Run migrations        
  We need to create the table for comments.        
         
 ```bash  
  php artisan migrate 
  ``` 
- ### Add Commenter trait to your User model        
+ ### 2. Add Commenter trait to your User model        
  Add the `Commenter` trait to your User model so that you can retrieve the comments for a user:        
         
 ```php 
@@ -56,7 +56,7 @@ class User extends Authenticatable {
  ``` 
 
 
- ### Add Commentable trait to models        
+ ### 3. Add Commentable trait to models        
  Add the `Commentable` trait and the `ICommentable` interface to the model for which you want to enable comments for:        
   
  ```php 
@@ -67,7 +67,7 @@ class User extends Authenticatable {
     use Commentable;        
  ```        
  
- ### Custom comment policy [Is not required]
+ ### 4. Custom comment policy [Is not required]
  If you need, you can overwrite default comment policy class:
  
   ```php 
