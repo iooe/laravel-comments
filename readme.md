@@ -65,7 +65,7 @@ class User extends Authenticatable {
     use Commentable;        
  ```        
  
- ### 5. Custom comment policy [Is not required]
+ ### 5. Custom comment policy (optional)
  If you need, you can overwrite default comment policy class:
  
   ```php 
