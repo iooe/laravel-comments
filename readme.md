@@ -174,8 +174,11 @@ If you open the page containing the view where you have placed the above code, y
  ` use tizis\laraComments\Http\CommentsHelper;` 
 
 #### Methods:
-- getNewestComments($take = 10)
+- getNewestComments(default $take = 10, default $commentable_type = null)
 - ...
 #### Example:
 
-` CommentsHelper::getNewestComments(10) // Return last 10 comments` 
+```
+CommentsHelper::getNewestComments(20) // Return last 20 comments
+CommentsHelper::getNewestComments(20, Book::class) // Return last 20 comments of Book model
+``` 

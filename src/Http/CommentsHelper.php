@@ -7,8 +7,8 @@ use tizis\laraComments\UseCases\CommentService;
 
 class CommentsHelper
 {
-    public static function getNewestComments($take = 10)
+    public static function getNewestComments($take = 10, $commentable_type = null)
     {
-        return CommentResource::collection(CommentService::getNewestComments($take));
+        return CommentResource::collection(CommentService::getNewestComments($take, $commentable_type));
     }
 }

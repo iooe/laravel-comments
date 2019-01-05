@@ -10,14 +10,20 @@ class CommentService
 {
     /**
      * @param int $take
+     * @param null $commentable_type
      * @return mixed
      */
-    public static function getNewestComments($take = 10) {
+    public static function getNewestComments($take = 10, $commentable_type = null)
+    {
         return Comment::take($take)
+            ->when($commentable_type !== null, function ($q) use ($commentable_type) {
+                return $q->where('commentable_type', $commentable_type);
+            })
             ->with(['commentable'])
             ->orderBy('id', 'desc')
             ->get();
     }
+
     /**
      * @param $message
      * @return mixed
