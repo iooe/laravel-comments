@@ -156,7 +156,7 @@ If you open the page containing the view where you have placed the above code, y
 
 |Title| Method |  Url | Params| Route name |
 |--|--|--| -- | --|
-|Get comments|GET |  /api/comments/ | commentable_type, commentable_id|  route('comments.get') |
+|Get comments|GET |  /api/comments/ | commentable_type, commentable_id, order_by: default is id, order_direction: default is asc |  route('comments.get') |
 |Store comment| POST | /api/comments/ | commentable_type, commentable_id, message |route('comments.store') | 
 |Delete comment|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
 |Edit comment|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
