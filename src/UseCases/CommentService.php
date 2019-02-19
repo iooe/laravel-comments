@@ -52,10 +52,12 @@ class CommentService
      */
     public static function orderByRequestAdapter(GetRequest $request): array
     {
-        if ($request->order_by === 'rating') {
-            return ['column' => 'rating', 'direction' => 'desc'];
-        }
-        return ['column' => 'id', 'direction' => 'asc'];
+        $order_direction = $request->order_direction === 'asc' || $request->order_direction === 'desc'
+            ? $request->order_direction : 'asc';
+
+        $order_by = $request->order_by === 'rating' ? $request->order_by : 'id';
+
+        return ['column' => $order_by, 'direction' => $order_direction];
     }
 
 
