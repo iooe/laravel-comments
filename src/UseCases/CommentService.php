@@ -38,15 +38,6 @@ class CommentService
     }
 
     /**
-     * @param $modelPath
-     * @return bool
-     */
-    public static function modelIsExists($modelPath): bool
-    {
-        return class_exists($modelPath);
-    }
-
-    /**
      * @param $model
      * @return bool
      */

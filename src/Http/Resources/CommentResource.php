@@ -28,9 +28,8 @@ class CommentResource extends JsonResource
         ];
     }
 
-    protected function getAvatar()
-    {
-        if (method_exists($this->commenter, 'getAvatar')) {
+    protected function getAvatar() {
+        if(method_exists($this->commenter, 'getAvatar')){
             return $this->commenter->getAvatar();
         }
         return null;
