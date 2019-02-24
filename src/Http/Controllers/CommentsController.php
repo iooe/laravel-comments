@@ -74,27 +74,35 @@ class CommentsController extends Controller
         $modelId = $request->commentable_id;
         $orderBy = CommentService::orderByRequestAdapter($request);
 
-        if (!class_exists($modelPath)) {
-            throw new \DomainException('Model don\'t exists');
+        try {
+            if (!class_exists($modelPath)) {
+                throw new \DomainException('Model don\'t exists');
+            }
+
+            if (!CommentService::isCommentable(new $modelPath)) {
+                throw new \DomainException('Model is\'t commentable');
+            }
+
+            $model = $modelPath::where('id', $modelId)->first();
+
+            $count = $model->comments()->count();
+            $resource = CommentResource::collection(
+                $model->comments()
+                    ->parentless()
+                    ->orderBy($orderBy['column'], $orderBy['direction'])
+                    ->get()
+            );
+
+            $response = [
+                'success' => true,
+                'comments' => $resource,
+                'count' => $count
+            ];
+        } catch (\DomainException $e) {
+            $response = ['success' => false, 'message' => $e->getMessage()];
         }
 
-        $model = new $modelPath;
-
-        if (!CommentService::isCommentable($model)) {
-            throw new \DomainException('Model is\'t commentable');
-        }
-
-        $model = $modelPath::where(['id' => $modelId])->first();
-
-        $count = $model->comments()->count();
-        $comments = $model->comments()
-            ->parentless()
-            ->orderBy($orderBy['column'], $orderBy['direction'])
-            ->get();
-
-        $resource = CommentResource::collection($comments);
-
-        return ['success' => true, 'comments' => $resource, 'count' => $count];
+        return $response;
     }
 
 
@@ -118,7 +126,6 @@ class CommentsController extends Controller
         return $request->ajax()
             ? ['success' => true, 'comment' => $resource]
             : redirect()->to(url()->previous() . '#comment-' . $comment->id);
-
     }
 
     /**
@@ -154,8 +161,8 @@ class CommentsController extends Controller
     public function reply(ReplyRequest $request, Comment $comment)
     {
         $this->authorize($this->policyPrefix . '.reply', $comment);
-        $message = CommentService::htmlFilter($request->message);
 
+        $message = CommentService::htmlFilter($request->message);
         $reply = CommentService::createComment(Auth::user(), $comment->commentable, $message, $comment);
         $resource = new CommentResource($reply);
 
