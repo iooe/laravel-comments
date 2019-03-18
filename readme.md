@@ -171,13 +171,24 @@ If you open the page containing the view where you have placed the above code, y
 - `tizis\laraComments\Events\CommentUpdated` 
 - `tizis\laraComments\Events\CommentDeleted`
 
- ## Static Helper    
+## Features Commentable model 
+- Scope withCommentsCount()
+
+#### Example:
+
+```
+/**
+ * Add comments_count attribute to model
+ */
+Posts::WithCommentsCount()->orderBy('id', 'desc')->get() 
+``` 
+
+## Static Helper    
  
  ` use tizis\laraComments\Http\CommentsHelper;` 
 
 #### Methods:
 - getNewestComments(default $take = 10, default $commentable_type = null)
-- ...
 #### Example:
 
 ```
