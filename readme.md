@@ -180,7 +180,7 @@ If you open the page containing the view where you have placed the above code, y
 /**
  * Add comments_count attribute to model
  */
-Posts::WithCommentsCount()->orderBy('id', 'desc')->get() 
+Posts::withCommentsCount()->orderBy('id', 'desc')->get() 
 ``` 
 
 ## Static Helper    
