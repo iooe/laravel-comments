@@ -20,7 +20,7 @@ class CommentResource extends JsonResource
             'rating' => $this->rating,
             'commenter' => [
                 'id' => $this->commenter->id,
-                'avatar' => self::getAvatar(),
+                'avatar' => $this->getAvatar(),
                 'name' => $this->commenter->name,
                 'email' => $this->commenter->email
             ],
