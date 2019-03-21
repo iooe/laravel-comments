@@ -13,5 +13,12 @@ return [
             'commentable' => 'App\User',
             'commenter' => 'App\Post'
         ]
+    ],
+    'api' => [
+        'get' => [
+            'comment' => [
+                'preprocessor' => null
+            ]
+        ]
     ]
 ];

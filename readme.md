@@ -164,14 +164,56 @@ If you open the page containing the view where you have placed the above code, y
 |Vote to comment|POST|/api/comments/{comment_id}/vote| vote(bool) | route('comments.vote', $comment_id)
 
 
- ## Events        
- This package fires events to let you know when things happen.        
-        
+## Events        
+This package fires events to let you know when things happen.        
+    
 - `tizis\laraComments\Events\CommentCreated` 
 - `tizis\laraComments\Events\CommentUpdated` 
 - `tizis\laraComments\Events\CommentDeleted`
 
-## Features Commentable model 
+## Api preprocessing
+
+Sometimes additional processing of content is necessary before transmission over API.
+
+For the comment preprocessing, you can use the config "preprocessor", in which you need to pass an anonymous function - a comment handler.
+
+#### Config:
+```
+    'api' => [
+        'get' => [
+            'comment' => [
+                'preprocessor' => function ($comment) {
+                    // some magic
+                    // CommentsHelper::commentPreprocessor($comment);
+                    return $comment;
+                }
+            ]
+        ]
+    ]
+``` 
+
+#### Example:
+
+Without preprocessing:
+```
+$comment = 1;
+echo $comment; // 1
+``` 
+With preprocessing:
+```
+Suppose a similar anonymous function has been added to the config:
+
+function ($comment) {
+    return 'Hi, ' . $comment . '!';
+}
+``` 
+
+```
+$comment = 1;
+echo $comment; // He, 1 !
+``` 
+
+## Features of Commentable model 
 - Scope withCommentsCount()
 
 #### Example:
