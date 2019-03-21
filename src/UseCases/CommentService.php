@@ -19,7 +19,7 @@ class CommentService
             ->when($commentable_type !== null, function ($q) use ($commentable_type) {
                 return $q->where('commentable_type', $commentable_type);
             })
-            ->with(['commentable, commenter'])
+            ->with(['commentable', 'commenter'])
             ->orderBy('id', 'desc')
             ->get();
     }
