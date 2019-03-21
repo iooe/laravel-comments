@@ -173,6 +173,11 @@ This package fires events to let you know when things happen.
 
 ## Api preprocessing
 
+Supported preprocessors for attributes of get api:
+- user > avatar
+- comment
+
+#### Description
 Sometimes additional processing of content is necessary before transmission over API.
 
 For the comment preprocessing, you can use the config "preprocessor", in which you need to pass an anonymous function - a comment handler.
@@ -181,8 +186,8 @@ For the comment preprocessing, you can use the config "preprocessor", in which y
 ```
     'api' => [
         'get' => [
-            'comment' => [
-                'preprocessor' => function ($comment) {
+            'preprocessor' => [
+                'comment' => function ($comment) {
                     // some magic
                     // CommentsHelper::commentPreprocessor($comment);
                     return $comment;

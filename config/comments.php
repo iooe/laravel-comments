@@ -16,8 +16,11 @@ return [
     ],
     'api' => [
         'get' => [
-            'comment' => [
-                'preprocessor' => null
+            'preprocessor' => [
+                'user' => [
+                    'avatar' => null
+                ],
+                'comment' => null
             ]
         ]
     ]
