@@ -12,6 +12,7 @@ use tizis\laraComments\Http\Requests\EditRequest;
 use tizis\laraComments\Http\Requests\GetRequest;
 use tizis\laraComments\Http\Requests\ReplyRequest;
 use tizis\laraComments\Http\Requests\SaveRequest;
+use tizis\laraComments\Http\Requests\ShowRequest;
 use tizis\laraComments\Http\Resources\CommentResource;
 use tizis\laraComments\UseCases\CommentService;
 use tizis\laraComments\UseCases\VoteService;
@@ -103,6 +104,17 @@ class CommentsController extends Controller
         return $response;
     }
 
+    /**
+     * @param Comment $comment
+     * @param Request $request
+     * @return array
+     */
+    public function show(Comment $comment, Request $request): array
+    {
+        return [
+            'comment' => $request->input('raw') ? $comment : new CommentResource($comment)
+        ];
+    }
 
     /**
      * Updates the message of the comment.
