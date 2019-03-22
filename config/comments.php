@@ -18,9 +18,15 @@ return [
         'get' => [
             'preprocessor' => [
                 'user' => [
-                    'avatar' => null
+                    'avatar' => [
+                        'class' => null,
+                        'method' => 'default'
+                    ]
                 ],
-                'comment' => null
+                'comment' => [
+                    'class' => null,
+                    'method' => 'default'
+                ]
             ]
         ]
     ]

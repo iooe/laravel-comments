@@ -32,11 +32,15 @@ class CommentResource extends JsonResource
      * @param string $comment
      * @return string
      */
-    protected static function preprocessor(string $comment):string {
+    protected static function preprocessor(string $comment): string
+    {
         $config = config('comments.api.get.preprocessor.comment');
+        $class = $config['class'];
+        $method = $config['method'];
 
-        if (\is_callable($config)) {
-            $comment = $config($comment);
+        if (\class_exists($config['class']) && \method_exists($config['class'], $config['method'])) {
+            $comment = $class::$method($comment);
+
         }
         return $comment;
     }
@@ -44,6 +48,11 @@ class CommentResource extends JsonResource
     protected function getAvatar()
     {
         $config = config('comments.api.get.preprocessor.user.avatar');
-        return \is_callable($config) ? $config($this->commenter) : null;
+        $class = $config['class'];
+        $method = $config['method'];
+        if (\class_exists($config['class']) && \method_exists($config['class'], $config['method'])) {
+            return $class::$method($this->commenter);
+        }
+        return null;
     }
 }
