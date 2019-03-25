@@ -180,7 +180,7 @@ Supported preprocessors for attributes of get api:
 #### Description
 Sometimes additional processing of content is necessary before transmission over API.
 
-For the comment preprocessing, you can use the config "preprocessor", in which you need to pass an anonymous function - a comment handler.
+For the comment preprocessing, you can use the config "preprocessor".
 
 #### Config:
 ```
