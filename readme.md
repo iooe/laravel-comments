@@ -187,11 +187,10 @@ For the comment preprocessing, you can use the config "preprocessor", in which y
     'api' => [
         'get' => [
             'preprocessor' => [
-                'comment' => function ($comment) {
-                    // some magic
-                    // CommentsHelper::commentPreprocessor($comment);
-                    return $comment;
-                }
+                'comment' => [
+                    'class' => App\Helpers\CommentPreprocessor::class,
+                    'method' => 'commentPreprocessor'
+                ]
             ]
         ]
     ]
@@ -205,12 +204,23 @@ $comment = 1;
 echo $comment; // 1
 ``` 
 With preprocessing:
-```
-Suppose a similar anonymous function has been added to the config:
 
-function ($comment) {
-    return 'Hi, ' . $comment . '!';
-}
+```
+<?php
+
+namespace App\Helpers;
+
+class CommentPreprocessor
+{
+    /**
+     * @param $comment
+     * @return string
+     */
+    public static function commentPreprocessor($comment)
+    {
+        return 'Hi, ' . $comment . '!';
+    }
+} 
 ``` 
 
 ```
