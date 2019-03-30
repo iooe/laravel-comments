@@ -1,6 +1,7 @@
 <?php
 
 namespace tizis\laraComments\Contracts;
+use tizis\laraComments\Entity\Comment;
 
 /**
  * Comment auth policy
@@ -10,11 +11,11 @@ namespace tizis\laraComments\Contracts;
  */
 interface ICommentPolicy
 {
-    public function edit($user, $comment);
+    public function edit($user, Comment $comment);
 
-    public function delete($user, $comment);
+    public function delete($user, Comment $comment);
 
-    public function reply($user, $comment);
+    public function reply($user, Comment $comment);
 
-    public function vote($user, $comment);
+    public function vote($user, Comment $comment);
 }

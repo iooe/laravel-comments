@@ -4,7 +4,6 @@ namespace tizis\laraComments\Http\Controllers;
 
 use Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use tizis\laraComments\Entity\Comment;
@@ -19,7 +18,7 @@ use tizis\laraComments\UseCases\VoteService;
 
 class CommentsController extends Controller
 {
-    use ValidatesRequests, AuthorizesRequests;
+    use AuthorizesRequests;
 
     protected $commentService;
     protected $voteService;
