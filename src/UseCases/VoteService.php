@@ -21,17 +21,16 @@ class VoteService
 
             if ($oldVoteEntity) {
                 $offset = $this->offset($oldVoteEntity->commenter_vote, $vote);
-            }
 
-            if ($oldVoteEntity && $offset) {
-                $this->remove($oldVoteEntity);
-            }
+                if ($oldVoteEntity && $offset) {
+                    $this->remove($oldVoteEntity);
+                }
 
-            if ($oldVoteEntity && !$offset) {
-                $this->update($oldVoteEntity, $vote);
-            }
+                if ($oldVoteEntity && !$offset) {
+                    $this->update($oldVoteEntity, $vote);
+                }
 
-            if (!$oldVoteEntity) {
+            } else {
                 $this->store($comment, $user, $vote);
             }
 
