@@ -225,7 +225,7 @@ class CommentPreprocessor
 
 ```
 $comment = 1;
-echo $comment; // He, 1 !
+echo $comment; // Hi, 1 !
 ``` 
 
 ## Features of Commentable model 
