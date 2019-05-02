@@ -17,16 +17,8 @@ return [
     'api' => [
         'get' => [
             'preprocessor' => [
-                'user' => [
-                    'avatar' => [
-                        'class' => null,
-                        'method' => 'default'
-                    ]
-                ],
-                'comment' => [
-                    'class' => null,
-                    'method' => 'default'
-                ]
+                'user' => null,
+                'comment' => null
             ]
         ]
     ]

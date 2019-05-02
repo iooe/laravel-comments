@@ -174,29 +174,47 @@ This package fires events to let you know when things happen.
 ## Api preprocessing
 
 Supported preprocessors for attributes of get api:
-- user > avatar
-- comment
+- user **[Object]**
+- comment **[String]**
 
-#### Description
+#### 1. Description
 Sometimes additional processing of content is necessary before transmission over API.
 
 For the comment preprocessing, you can use the config "preprocessor".
 
-#### Config:
+#### 2. Config:
 ```
     'api' => [
         'get' => [
             'preprocessor' => [
-                'comment' => [
-                    'class' => App\Helpers\CommentPreprocessor::class,
-                    'method' => 'commentPreprocessor'
-                ]
+                'comment' =>  App\Helpers\CommentPreprocessor\Comment::class
             ]
         ]
     ]
 ``` 
 
-#### Example:
+#### 3. Contact     
+ Create preprocessor class and implement `ICommentPreprocessor` interface:      
+ 
+ Example:
+ ```
+ 
+namespace App\Helpers\CommentPreprocessor;
+
+use tizis\laraComments\Contracts\ICommentPreprocessor;
+
+class Comment implements ICommentPreprocessor
+{
+    public function process($comment): array
+    {
+        return 'Hi, ' . $comment . '!';
+    }
+}
+           
+ ```        
+ 
+ 
+#### 4. Example:
 
 Without preprocessing:
 ```
@@ -204,24 +222,6 @@ $comment = 1;
 echo $comment; // 1
 ``` 
 With preprocessing:
-
-```
-<?php
-
-namespace App\Helpers;
-
-class CommentPreprocessor
-{
-    /**
-     * @param $comment
-     * @return string
-     */
-    public static function commentPreprocessor($comment)
-    {
-        return 'Hi, ' . $comment . '!';
-    }
-} 
-``` 
 
 ```
 $comment = 1;

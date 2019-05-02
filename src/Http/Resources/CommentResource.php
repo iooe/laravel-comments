@@ -3,6 +3,7 @@
 namespace tizis\laraComments\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use tizis\laraComments\Contracts\ICommentPreprocessor;
 
 class CommentResource extends JsonResource
 {
@@ -14,16 +15,11 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'comment' => self::preprocessor($this->comment),
+            'comment' => self::comment($this->comment),
             'created_at' => $this->created_at->timestamp,
             'commenter_id' => $this->commenter_id,
             'rating' => $this->rating,
-            'commenter' => [
-                'id' => $this->commenter->id,
-                'avatar' => $this->getAvatar(),
-                'name' => $this->commenter->name,
-                'email' => $this->commenter->email
-            ],
+            'commenter' => self::user($this->commenter),
             'children' => self::collection($this->children)
         ];
     }
@@ -32,27 +28,43 @@ class CommentResource extends JsonResource
      * @param string $comment
      * @return string
      */
-    protected static function preprocessor(string $comment): string
+    protected static function comment(string $comment): string
     {
         $config = config('comments.api.get.preprocessor.comment');
-        $class = $config['class'];
-        $method = $config['method'];
 
-        if (\class_exists($config['class']) && \method_exists($config['class'], $config['method'])) {
-            $comment = $class::$method($comment);
-
+        if (!\class_exists($config)) {
+            return $comment;
         }
+
+        $preprocessor = new $config;
+
+        if ($preprocessor instanceof ICommentPreprocessor) {
+            $comment = $preprocessor->process($comment);
+        }
+
         return $comment;
     }
 
-    protected function getAvatar()
+    protected static function user($user)
     {
-        $config = config('comments.api.get.preprocessor.user.avatar');
-        $class = $config['class'];
-        $method = $config['method'];
-        if (\class_exists($config['class']) && \method_exists($config['class'], $config['method'])) {
-            return $class::$method($this->commenter);
+        $config = config('comments.api.get.preprocessor.user');
+        $default = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email
+        ];
+
+        if (!\class_exists($config)) {
+            return $default;
         }
-        return null;
+
+
+        $preprocessor = new $config;
+
+        if (\class_exists($config) && ($preprocessor instanceof ICommentPreprocessor)) {
+            return $preprocessor->process($user);
+        }
+
+        return $default;
     }
 }
