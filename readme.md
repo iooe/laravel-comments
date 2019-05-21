@@ -1,5 +1,6 @@
   
-    
+   [README на русском](readme-ru.md)
+ 
 # laraComments        
  This package can be used to comment on any model you have in your application.        
                     
@@ -108,7 +109,7 @@ class User extends Authenticatable {
  ```
  
  ## Examples    
-This repository include only bootstrap template, but you can create you own UI.
+This repository include only 'bootstrap4' template, but you can create you own UI. This is just a example of package features.
 
 This is examples of comments rendering using backend and this way have bad performance when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
 
@@ -123,7 +124,7 @@ Good way is using api for get data through ajax and build UI with Vue js (or any
  In the `config` file you can specify:        
         
 - where is your User model located; the default is `\App\User::class` 
-- policy prefix, you can create custom policy class and implement ICommentPolicy;        
+- policy prefix, you can create custom policy class and extends `tizis\laraComments\Policies\CommentPolicy;`    
 - allow tags for html filter      
         
 Publish the config file (optional):        
@@ -151,7 +152,9 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 @comments(['model' => $book])  
 @endcomments   
 ``` 
-In the example above we are setting the `commentable_type` to the class of the book. We are also passing the `commentable_id` the `id` of the book so that we know to which book the comments relate to. Behind the scenes, the package detects the currently logged in user if any.        
+In the example above we are setting argument the `model` as class of the book model. 
+
+Behind the scenes, the package detects the currently logged in user if any.        
         
 If you open the page containing the view where you have placed the above code, you should see a working comments form.        
         
