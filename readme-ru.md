@@ -146,8 +146,7 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 ### 1. Рендеринг на стороне сервера:  
   В том месте представления (view), где вы желаете вывести комментарии, вставьте этот код:      
 ``` 
-@comments(['model' => $book])  
-@endcomments   
+@comments(['model' => $book]) @endcomments   
 ``` 
 В примере, мы передаем модель книги в качестве аргумента `model`. Из нее автоматически считывается информации об `commentable_type` и `commentable_id`.
 
