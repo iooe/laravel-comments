@@ -132,7 +132,12 @@ Publish the config file (optional):
 php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=config 
 ```        
  ### Publish views (customization)        
- The default UI is made for Bootstrap 4, but you can change it however you want.        
+ 
+ The default UI is made for Bootstrap 4, but you can change it however you want. 
+ 
+ ⚠⚠⚠⚠**WARNING**⚠⚠⚠⚠     
+ 
+ All view examples include js/css files for correct working. The possibility of conflict with your scripts and styles.
         
 ```bash 
 php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=views 
