@@ -18,7 +18,6 @@ class CreateCommentsVotesTable extends Migration
             $table->unsignedInteger('commenter_id');
             $table->unsignedInteger('comment_id');
             $table->boolean('commenter_vote');
-            $table->foreign('id')->references('id')->on('comments');
             $table->index('commenter_id');
             $table->index('comment_id');
             $table->timestamps();
