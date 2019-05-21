@@ -175,7 +175,8 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 - `tizis\laraComments\Events\CommentDeleted`
 
 ## API препроцессинг
-⚠*⚠*⚠***ДОСТУПН ТОЛЬКО ДЛЯ API**⚠*⚠*⚠*
+
+⚠⚠⚠**ДОСТУПН ТОЛЬКО ДЛЯ API**⚠⚠⚠
 
 Поддержка аттрибутов (при получении комментариев):
 - user **[Object]**
