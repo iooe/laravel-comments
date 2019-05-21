@@ -55,7 +55,7 @@ class User extends Authenticatable {
  ``` 
 
 
- ### 4. Add Commentable trait to models        
+ ### 4. Add `Commentable` trait and the `ICommentable` interface to models        
  Add the `Commentable` trait and the `ICommentable` interface to the model for which you want to enable comments for:        
   
  ```php 
@@ -88,7 +88,7 @@ class User extends Authenticatable {
  }
  ```
  
- Then register policy in AuthServiceProvider:
+ Then register policy in `AuthServiceProvider`:
  ```php 
  use Illuminate\Support\Facades\Gate;
  use App\Http\Policies\CommentPolicy;
@@ -109,11 +109,11 @@ class User extends Authenticatable {
  ```
  
  ## Examples    
-This repository include only 'bootstrap4' template, but you can create you own UI. This is just a example of package features.
+This repository include only `bootstrap4` template, but you can create you own UI. This is just a example of package features.
 
-This is examples of comments rendering using backend and this way have bad performance when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
+This is examples of comments rendering using backend and `this way have bad performance` when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
 
-Good way is using api for get data through ajax and build UI with Vue js (or any other library) with verification of user permissions for UI on frontend.
+`Good way` is using api for get data through ajax and build UI with Vue js (or any other library) with verification of user permissions for UI on frontend.
 
 1. Build with semantic ui    
 ![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
@@ -134,11 +134,11 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 ```        
  ### Publish views (customization)        
  
- The default UI is made for Bootstrap 4, but you can change it however you want. 
+ The default UI is made for `Bootstrap 4`, but `you can change it` however you want. 
  
  ⚠⚠⚠⚠**WARNING**⚠⚠⚠⚠     
  
- All view examples include js/css files for correct working. The possibility of conflict with your scripts and styles.
+ All view examples include js/css files for correct working. `The possibility of conflict` with your scripts and styles.
         
 ```bash 
 php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvider" --tag=views 
