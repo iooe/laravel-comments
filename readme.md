@@ -176,7 +176,9 @@ This package fires events to let you know when things happen.
 - `tizis\laraComments\Events\CommentUpdated` 
 - `tizis\laraComments\Events\CommentDeleted`
 
-## Api preprocessing
+## API preprocessing
+
+⚠**Only for API!**⚠
 
 Supported preprocessors for attributes of get api:
 - user **[Object]**
@@ -185,14 +187,15 @@ Supported preprocessors for attributes of get api:
 #### 1. Description
 Sometimes additional processing of content is necessary before transmission over API.
 
-For the comment preprocessing, you can use the config "preprocessor".
 
 #### 2. Config:
 ```
     'api' => [
         'get' => [
             'preprocessor' => [
-                'comment' =>  App\Helpers\CommentPreprocessor\Comment::class
+                'comment' =>  App\Helpers\CommentPreprocessor\Comment::class,
+                'user' =>  App\Helpers\CommentPreprocessor\User::class 
+                ...
             ]
         ]
     ]
@@ -201,7 +204,9 @@ For the comment preprocessing, you can use the config "preprocessor".
 #### 3. Contact     
  Create preprocessor class and implement `ICommentPreprocessor` interface:      
  
- Example:
+ **Examples**:
+ 
+ Comment:
  ```
  
 namespace App\Helpers\CommentPreprocessor;
@@ -217,7 +222,23 @@ class Comment implements ICommentPreprocessor
 }
            
  ```        
+ User:
+  ```
+  
+ namespace App\Helpers\CommentPreprocessor;
  
+ use tizis\laraComments\Contracts\ICommentPreprocessor;
+ 
+ class User implements ICommentPreprocessor
+ {
+     public function process($user): array
+     {
+         $user->name = $user->name . '[Moderator]' 
+         return $user;
+     }
+ }
+            
+  ```  
  
 #### 4. Example:
 
@@ -225,12 +246,18 @@ Without preprocessing:
 ```
 $comment = 1;
 echo $comment; // 1
+
+$user = Auth::user();
+echo $user->name; // user1
 ``` 
 With preprocessing:
 
 ```
 $comment = 1;
 echo $comment; // Hi, 1 !
+
+$user = Auth::user();
+echo $user->name; // user1[Moderator]
 ``` 
 
 ## Features of Commentable model 
