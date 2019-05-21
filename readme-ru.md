@@ -176,7 +176,7 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 
 ## API препроцессинг
 
-⚠⚠⚠**ДОСТУПН ТОЛЬКО ДЛЯ API**⚠⚠⚠
+⚠⚠⚠**ДОСТУПЕН ТОЛЬКО ДЛЯ API**⚠⚠⚠
 
 Поддержка аттрибутов (при получении комментариев):
 - user **[Object]**
