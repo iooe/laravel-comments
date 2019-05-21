@@ -274,7 +274,7 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
  ` use tizis\laraComments\Http\CommentsHelper;` 
 
 #### Доступные методы:
-- getNewestComments(default $take = 10, default $commentable_type = null) // получитьПослдениеКомментарии
+- getNewestComments(default $take = 10, default $commentable_type = null) // получитьПоследниеКомментарии
 #### Пример:
 
 ```
