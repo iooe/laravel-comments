@@ -160,8 +160,8 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 |--|--|--| -- | --|
 |Получить комментарии |GET |  /api/comments/ | commentable_type, commentable_id, order_by (column name, default is id), order_direction (default is asc) |  route('comments.get') |
 |Сохранить комментарий| POST | /api/comments/ | commentable_type, commentable_id, message |route('comments.store') | 
-|Удалить комментарий comment|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
-|Изменить комментарий comment|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
+|Удалить комментарий|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
+|Изменить комментарий|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
 |Ответить на комментарий|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
 |Проголосовать за комментарий|POST|/api/comments/{comment_id}/vote| vote(bool) | route('comments.vote', $comment_id)
 
