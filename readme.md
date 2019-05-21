@@ -181,7 +181,7 @@ This package fires events to let you know when things happen.
 
 ## API preprocessing
 
-⚠**Only for API!**⚠
+⚠ **WARNING! Only for API!** ⚠
 
 Supported preprocessors for attributes of get api:
 - user **[Object]**
