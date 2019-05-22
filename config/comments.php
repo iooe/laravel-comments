@@ -7,6 +7,10 @@ return [
     'purifier' => [
         'HTML_Allowed' => 'p',
     ],
+    'route' => [
+        'root' => 'api',
+        'group' => 'comments'
+    ],
     'policy_prefix' => 'comments',
     'testing' => [
         'seeding' => [

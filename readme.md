@@ -125,7 +125,8 @@ This is examples of comments rendering using backend and `this way have bad perf
         
 - where is your User model located; the default is `\App\User::class` 
 - policy prefix, you can create custom policy class and extends `tizis\laraComments\Policies\CommentPolicy;`    
-- allow tags for html filter      
+- allow tags for html filter    
+- API prefix  
         
 Publish the config file (optional):        
         

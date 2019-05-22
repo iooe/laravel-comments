@@ -1,10 +1,10 @@
 <?php
 
-Route::group(['prefix' => 'api'], function () {
+Route::group(['prefix' => config('comments.route.root')], function () {
     /**
      * Comments
      */
-    Route::group(['prefix' => 'comments', 'as' => 'comments.',], function () {
+    Route::group(['prefix' => config('comments.route.group'), 'as' => 'comments.',], function () {
         Route::get('/', '\tizis\laraComments\Http\Controllers\CommentsController@get')->name('get');
         Route::post('/', '\tizis\laraComments\Http\Controllers\CommentsController@store')->name('store');
         Route::delete('/{comment}', '\tizis\laraComments\Http\Controllers\CommentsController@destroy')->name('delete');
