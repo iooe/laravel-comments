@@ -58,10 +58,9 @@ class CommentResource extends JsonResource
             return $default;
         }
 
-
         $preprocessor = new $config;
 
-        if (\class_exists($config) && ($preprocessor instanceof ICommentPreprocessor)) {
+        if ($preprocessor instanceof ICommentPreprocessor) {
             return $preprocessor->process($user);
         }
 
