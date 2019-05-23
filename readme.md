@@ -172,6 +172,38 @@ If you open the page containing the view where you have placed the above code, y
 |Reply to comment|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
 |Vote to comment|POST|/api/comments/{comment_id}/vote| vote(bool) | route('comments.vote', $comment_id)
 
+### 3. Access to the comment service
+
+If you don't want use  out of the box features: API, or the CommentController, but want to access the built-in features - you can use `tizis\laraComments\UseCases\CommentService`
+
+ `CommentService` class used inside default comment controller for request processing. 
+
+To disable API routes by default, set the `route.root => null` config value
+**Methods**:
+1. Сreate comment: `CommentService::createComment`
+  ```
+  $user = Auth::user();
+  $model = $model = Post::findOrFail($request->commentable_id);
+  $message = '123'
+  
+  $parent = rand(1, 100); // Необязательный параметр
+  
+  $createdComment = CommentService::createComment($user, $model, $message, [опциональный аргумент $parent]);
+```
+ 2. Delete comment: `CommentService::deleteComment`
+  ```
+  $comment = Comment::findOrFail(123);
+
+  CommentService::deleteComment($comment);
+```
+
+2. Update comment: `CommentService::updateComment`
+  ```
+    $comment = Comment::findOrFail(123);
+    $message = 'new text';
+    
+    $updatedComment = CommentService::updateComment($comment, $message);
+```
 
 ## Events        
 This package fires events to let you know when things happen.        

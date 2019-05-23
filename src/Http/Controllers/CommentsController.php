@@ -171,7 +171,8 @@ class CommentsController extends Controller
         $this->authorize($this->policyPrefix . '.reply', $comment);
 
         $reply = CommentService::createComment(
-            Auth::user(), $comment->commentable,
+            Auth::user(),
+            $comment->commentable,
             CommentService::htmlFilter($request->message),
             $comment
         );

@@ -118,6 +118,7 @@ class User extends Authenticatable {
 ![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
 2. Реализация интерфейса с помощью библиотеки bootstrap 4    
 ![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
+
       
  ### Публикация конфига и конфигурация приложения (опционально)        
 В `конфиге` вы можете определить такие настройки, как:
@@ -166,6 +167,39 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 |Ответить на комментарий|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
 |Проголосовать за комментарий|POST|/api/comments/{comment_id}/vote| vote(bool) | route('comments.vote', $comment_id)
 
+### 3. Доступ к сервису комментариев
+
+Если вы `не желаете` использовать готовый функционал из коробки, вроде API и контроллера с предустановленными методами, но хотите получить доступ к встроенным возможностям данной библиотеки, то вы можеет воспользоваться помощью `tizis\laraComments\UseCases\CommentService`
+
+Данный класс используется внутри встроенного контроллера комментариев для обработки запросов, так что, вы не будете ничем не ограничены при его использование.     
+
+Для отключения роутов API по умолчанию установите значение конфига `route.root => null`
+
+**Методы**:
+1. Создание комментария: `CommentService::createComment`
+  ```
+  $user = Auth::user();
+  $model = $model = Post::findOrFail($request->commentable_id);
+  $message = '123'
+  
+  $parent = rand(1, 100); // Необязательный параметр
+  
+  $createdComment = CommentService::createComment($user, $model, $message, [опциональный аргумент $parent]);
+```
+ 2. Удаление комментария: `CommentService::deleteComment`
+  ```
+  $comment = Comment::findOrFail(123);
+
+  CommentService::deleteComment($comment);
+```
+
+2. Изменение комментария: `CommentService::updateComment`
+  ```
+    $comment = Comment::findOrFail(123);
+    $message = 'new text';
+    
+    $updatedComment = CommentService::updateComment($comment, $message);
+```
 
 ## События        
 Эта библиотека содержит события на создание, удаление, и редактирование комментария.
