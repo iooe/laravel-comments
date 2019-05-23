@@ -17,7 +17,6 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'comment' => self::comment($this->comment),
             'created_at' => $this->created_at->timestamp,
-            'commenter_id' => $this->commenter_id,
             'rating' => $this->rating,
             'commenter' => self::user($this->commenter),
             'children' => self::collection($this->children)

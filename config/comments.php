@@ -14,8 +14,8 @@ return [
     'policy_prefix' => 'comments',
     'testing' => [
         'seeding' => [
-            'commentable' => 'App\User',
-            'commenter' => 'App\Post'
+            'commentable' => '\App\Post',
+            'commenter' => '\App\User'
         ]
     ],
     'api' => [
