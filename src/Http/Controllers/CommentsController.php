@@ -124,7 +124,7 @@ class CommentsController extends Controller
      * @return array|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(EditRequest $request, CommentInterface $comment)
+    public function update(EditRequest $request, Comment $comment)
     {
         $this->authorize($this->policyPrefix . '.edit', $comment);
 
@@ -145,7 +145,7 @@ class CommentsController extends Controller
      * @return array|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Request $request, CommentInterface $comment)
+    public function destroy(Request $request, Comment $comment)
     {
         $this->authorize($this->policyPrefix . '.delete', $comment);
 
@@ -168,7 +168,7 @@ class CommentsController extends Controller
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function reply(ReplyRequest $request, CommentInterface $comment)
+    public function reply(ReplyRequest $request, Comment $comment)
     {
         $this->authorize($this->policyPrefix . '.reply', $comment);
 
