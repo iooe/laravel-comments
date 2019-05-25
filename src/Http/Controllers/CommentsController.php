@@ -110,7 +110,7 @@ class CommentsController extends Controller
      * @param Request $request
      * @return array
      */
-    public function show(CommentInterface $comment, Request $request): array
+    public function show(Comment $comment, Request $request): array
     {
         return [
             'comment' => $request->input('raw') ? $comment : new CommentResource($comment)
