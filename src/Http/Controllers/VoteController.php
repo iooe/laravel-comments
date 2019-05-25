@@ -30,7 +30,7 @@ class VoteController extends Controller
         $this->voteService = $voteService;
     }
 
-    public function vote(VoteRequest $request, CommentInterface $comment)
+    public function vote(VoteRequest $request, Comment $comment)
     {
         $this->authorize($this->policyPrefix . '.vote', $comment);
 
