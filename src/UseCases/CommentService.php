@@ -75,7 +75,7 @@ class CommentService
      * @param string $message
      * @return Comment
      */
-    public static function updateComment(CommentInterface $comment, string $message): Comment
+    public static function updateComment(CommentInterface $comment, string $message): CommentInterface
     {
         $comment->update([
             'comment' => $message
@@ -91,10 +91,8 @@ class CommentService
      * @param null $parent
      * @return Comment
      */
-    public static function createComment($user, ICommentable $model, string $message, $parent = null): Comment
+    public static function createComment(CommentInterface $comment, $user, ICommentable $model, string $message, $parent = null): CommentInterface
     {
-
-        $comment = new Comment();
         $comment->commenter()->associate($user);
         $comment->commentable()->associate($model);
 

@@ -188,7 +188,7 @@ To disable API routes by default, set the `route.root => null` config value
   
   $parent = rand(1, 100); // optional
   
-  $createdComment = CommentService::createComment($user, $model, $message, [optional $parent]);
+  $createdComment = CommentService::createComment(new Comment(), $user, $model, $message, [optional $parent]);
 ```
  2. Delete comment: `CommentService::deleteComment`
   ```

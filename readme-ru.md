@@ -184,7 +184,7 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
   
   $parent = rand(1, 100); // Необязательный параметр
   
-  $createdComment = CommentService::createComment($user, $model, $message, [опциональный аргумент $parent]);
+  $createdComment = CommentService::createComment(new Comment(), $user, $model, $message, [опциональный аргумент $parent]);
 ```
  2. Удаление комментария: `CommentService::deleteComment`
   ```

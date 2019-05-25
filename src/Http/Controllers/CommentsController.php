@@ -57,6 +57,7 @@ class CommentsController extends Controller
         $model = $modelPath::findOrFail($request->commentable_id);
 
         $comment = CommentService::createComment(
+            new Comment(),
             Auth::user(),
             $model,
             CommentService::htmlFilter($request->message)
@@ -172,6 +173,7 @@ class CommentsController extends Controller
         $this->authorize($this->policyPrefix . '.reply', $comment);
 
         $reply = CommentService::createComment(
+            new Comment(),
             Auth::user(),
             $comment->commentable,
             CommentService::htmlFilter($request->message),
