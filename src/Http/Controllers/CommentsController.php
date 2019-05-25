@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use tizis\laraComments\Entity\Comment;
+use tizis\laraComments\Contracts\Comment as CommentInterface;
 use tizis\laraComments\Http\Requests\EditRequest;
 use tizis\laraComments\Http\Requests\GetRequest;
 use tizis\laraComments\Http\Requests\ReplyRequest;
@@ -108,7 +109,7 @@ class CommentsController extends Controller
      * @param Request $request
      * @return array
      */
-    public function show(Comment $comment, Request $request): array
+    public function show(CommentInterface $comment, Request $request): array
     {
         return [
             'comment' => $request->input('raw') ? $comment : new CommentResource($comment)
@@ -122,7 +123,7 @@ class CommentsController extends Controller
      * @return array|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(EditRequest $request, Comment $comment)
+    public function update(EditRequest $request, CommentInterface $comment)
     {
         $this->authorize($this->policyPrefix . '.edit', $comment);
 
@@ -143,7 +144,7 @@ class CommentsController extends Controller
      * @return array|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Request $request, Comment $comment)
+    public function destroy(Request $request, CommentInterface $comment)
     {
         $this->authorize($this->policyPrefix . '.delete', $comment);
 
@@ -166,7 +167,7 @@ class CommentsController extends Controller
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function reply(ReplyRequest $request, Comment $comment)
+    public function reply(ReplyRequest $request, CommentInterface $comment)
     {
         $this->authorize($this->policyPrefix . '.reply', $comment);
 

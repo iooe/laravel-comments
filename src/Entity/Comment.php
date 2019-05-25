@@ -4,11 +4,12 @@ namespace tizis\laraComments\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use tizis\laraComments\Contracts\Comment as CommentInterface;
 use tizis\laraComments\Events\CommentCreated;
 use tizis\laraComments\Events\CommentDeleted;
 use tizis\laraComments\Events\CommentUpdated;
 
-class Comment extends Model
+class Comment extends Model implements CommentInterface
 {
     use SoftDeletes;
 

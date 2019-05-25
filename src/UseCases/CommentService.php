@@ -2,6 +2,7 @@
 
 namespace tizis\laraComments\UseCases;
 
+use tizis\laraComments\Contracts\Comment as CommentInterface;
 use tizis\laraComments\Contracts\ICommentable;
 use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Http\Requests\GetRequest;
@@ -74,7 +75,7 @@ class CommentService
      * @param string $message
      * @return Comment
      */
-    public static function updateComment(Comment $comment, string $message): Comment
+    public static function updateComment(CommentInterface $comment, string $message): Comment
     {
         $comment->update([
             'comment' => $message
@@ -112,7 +113,7 @@ class CommentService
      * @param Comment $comment
      * @throws \Exception
      */
-    public static function deleteComment(Comment $comment): void
+    public static function deleteComment(CommentInterface $comment): void
     {
         if (!$comment->children()->exists()) {
             $comment->delete();
@@ -125,7 +126,7 @@ class CommentService
      * @param Comment $comment
      * @return int
      */
-    public static function ratingRecalculation(Comment $comment): int
+    public static function ratingRecalculation(CommentInterface $comment): int
     {
         $rating = 0;
         foreach ($comment->votes as $vote) {

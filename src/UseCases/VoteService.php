@@ -3,6 +3,7 @@
 namespace tizis\laraComments\UseCases;
 
 use DB;
+use tizis\laraComments\Contracts\Comment as CommentInterface;
 use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Entity\CommentVotes;
 
@@ -14,7 +15,7 @@ class VoteService
      * @param int $vote
      * @throws \Throwable
      */
-    public function make($user, Comment $comment, int $vote): void
+    public function make($user, CommentInterface $comment, int $vote): void
     {
         DB::transaction(function () use ($user, $comment, $vote) {
             $oldVoteEntity = $comment->votes()->where('commenter_id', $user->id)->first();
@@ -72,7 +73,7 @@ class VoteService
      * @param $user
      * @param int $vote
      */
-    private function store(Comment $comment, $user, int $vote): void
+    private function store(CommentInterface $comment, $user, int $vote): void
     {
         $comment->votes()->save(new CommentVotes([
                 'commenter_id' => $user->id,
