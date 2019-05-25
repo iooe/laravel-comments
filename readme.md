@@ -113,7 +113,7 @@ This repository include only `bootstrap4` template, but you can create you own U
 
 This is examples of comments rendering using backend and `this way have bad performance` when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
 
-`Good way` is using api for get data through ajax and build UI with Vue js (or any other library) with verification of user permissions for UI on frontend.
+`Good way` is using API, HTTP requests (AJAX) and build UI with Vue js (or any other library) with verification of user permissions for UI on frontend.
 
 1. Build with semantic ui    
 ![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      

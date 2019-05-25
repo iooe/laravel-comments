@@ -18,6 +18,11 @@ return [
             'commenter' => '\App\User'
         ]
     ],
+    /**
+     * Only for API
+     *
+     * @example ['get']['preprocessor']['user'] => App\UseCases\CommentPreprocessor\User::class
+     */
     'api' => [
         'get' => [
             'preprocessor' => [
