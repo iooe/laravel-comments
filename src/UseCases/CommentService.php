@@ -139,10 +139,10 @@ class CommentService
      * @param int $userId
      * @return float|int
      */
-    public static function getUserRating(int $userId): int
+    public static function getUserRatingWithoutCaching(int $userId): int
     {
         $rating = 0;
-        
+
         foreach (Comment::where('commenter_id', $userId)->where('rating', '!=', 0)->get('rating')->pluck('rating')
                      ->toArray() as $commentRating) {
 

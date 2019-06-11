@@ -33,7 +33,7 @@ class CommentsHelper
             return (int)\Cache::get($cacheKey);
         }
 
-        $rating = CommentService::getUserRating($userId);
+        $rating = CommentService::getUserRatingWithoutCaching($userId);
 
         if ($cacheTtl !== null) {
             \Cache::put($cacheKey, $rating, $cacheTtl);
