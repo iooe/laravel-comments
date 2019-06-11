@@ -309,6 +309,7 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
 
 #### Доступные методы:
 - getNewestComments(default $take = 10, default $commentable_type = null) // получитьПоследниеКомментарии
+- getUserRating(int $userId, [optional Carbon $cacheTtl]) // ПолучитьРейтингПользователя
 #### Пример:
 
 ```

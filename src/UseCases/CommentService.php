@@ -134,4 +134,26 @@ class CommentService
         $comment->save();
         return $rating;
     }
+
+    /**
+     * @param int $userId
+     * @return float|int
+     */
+    public static function getUserRating(int $userId): int
+    {
+        $rating = 0;
+        
+        foreach (Comment::where('commenter_id', $userId)->where('rating', '!=', 0)->get('rating')->pluck('rating')
+                     ->toArray() as $commentRating) {
+
+            if ($commentRating > 0) {
+                $rating += $commentRating;
+            } else {
+                $rating -= abs($commentRating);
+            }
+
+        }
+
+        return $rating;
+    }
 }
