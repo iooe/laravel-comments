@@ -38,12 +38,14 @@ class CommentsController extends Controller
 
     /**
      * Creates a new comment for given model.
-     *
      * @param SaveRequest $request
      * @return array|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(SaveRequest $request)
     {
+        $this->authorize($this->policyPrefix . '.store');
+
         $modelPath = $request->commentable_type;
 
         if (!CommentService::modelIsExists($modelPath)) {

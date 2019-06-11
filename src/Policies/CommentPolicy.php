@@ -9,6 +9,15 @@ class CommentPolicy implements ICommentPolicy
 {
     /**
      * @param $user
+     * @return bool
+     */
+    public function store($user): bool
+    {
+        return true;
+    }
+
+    /**
+     * @param $user
      * @param Comment $comment
      * @return bool
      */
