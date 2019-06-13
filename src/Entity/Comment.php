@@ -42,7 +42,7 @@ class Comment extends Model implements CommentInterface
     public function allChildrenWithCommenter()
     {
         return $this->hasMany(Comment::class, 'child_id')
-            ->with(['allChildren', 'commenter']);
+            ->with('allChildrenWithCommenter');
     }
 
     /**

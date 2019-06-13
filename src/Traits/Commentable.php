@@ -29,6 +29,17 @@ trait Commentable
     }
 
     /**
+     * Returns all comments for this model with recursion and commenter eager loading.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function commentsWithChildrenAndCommenter()
+    {
+        return $this->morphMany(Comment::class, 'commentable')
+            ->with('allChildrenWithCommenter', 'allChildrenWithCommenter.commenter', 'commenter');
+    }
+
+    /**
      * @param Builder $query
      */
     public function scopeWithCommentsCount(Builder $query)

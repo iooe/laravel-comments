@@ -27,6 +27,6 @@ trait Commenter
     public function commentsWithChildrenAndCommenter()
     {
         return $this->hasMany(Comment::class, 'commenter_id')
-            ->with(['allChildren']);
+            ->with('allChildrenWithCommenter', 'allChildrenWithCommenter.commenter', 'commenter');
     }
 }
