@@ -64,7 +64,7 @@
                         @include('comments::components.comment.forms')
                         <br/>
 
-                        @foreach($comment->children as $child)
+                        @foreach($comment->allChildrenWithCommenter as $child)
                             @include('comments::components.comment.comment', [
                                     'comment' => $child,
                                     'reply' => true
