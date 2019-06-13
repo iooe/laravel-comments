@@ -12,6 +12,13 @@ interface Comment
     public function children();
 
     /**
+     * Recursive version of comments with commenter relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function allChildrenWithCommenter();
+
+    /**
      * @param $query
      *
      * @return mixed
@@ -38,7 +45,6 @@ interface Comment
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent();
-
 
     public function rating();
 
