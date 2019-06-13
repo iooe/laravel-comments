@@ -21,9 +21,8 @@ class Comment extends Model implements CommentInterface
         'deleted' => CommentDeleted::class,
     ];
 
-    protected $with = ['children', 'commenter'];
-
     protected $dates = ['deleted_at'];
+    /*    protected $with = ['children', 'commenter'];*/
 
     /**
      * Returns all comments that this comment is the parent of.
@@ -33,6 +32,17 @@ class Comment extends Model implements CommentInterface
     public function children()
     {
         return $this->hasMany(Comment::class, 'child_id');
+    }
+
+    /**
+     * Recursive version of comments with commenter relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function allChildrenWithCommenter()
+    {
+        return $this->hasMany(Comment::class, 'child_id')
+            ->with(['allChildren', 'commenter']);
     }
 
     /**

@@ -96,12 +96,12 @@ class CommentsController extends Controller
         $response = [
             'success' => true,
             'comments' => CommentResource::collection(
-                $model->comments()
+                $model->commentsWithChildrenAndCommenter()
                     ->parentless()
                     ->orderBy($orderBy['column'], $orderBy['direction'])
                     ->get()
             ),
-            'count' => $model->comments()->count()
+            'count' => $model->commentsWithChildrenAndCommenter()->count()
         ];
 
         return $response;

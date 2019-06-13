@@ -18,4 +18,15 @@ trait Commenter
     {
         return $this->hasMany(Comment::class, 'commenter_id');
     }
+
+    /**
+     * Returns all comments that this user has made with recursion and commenter eager loading.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function commentsWithChildrenAndCommenter()
+    {
+        return $this->hasMany(Comment::class, 'commenter_id')
+            ->with(['allChildren']);
+    }
 }

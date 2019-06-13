@@ -5,8 +5,8 @@
 @endauth
 
 @php
-    $count = $model->comments()->count();
-    $comments = $model->comments()->parentless()->get();
+    $count = $model->commentsWithChildrenAndCommenter()->count();
+    $comments = $model->commentsWithChildrenAndCommenter()->parentless()->get();
 @endphp
 @if($count < 1)
     <p class="lead">There are no comments yet.</p>
