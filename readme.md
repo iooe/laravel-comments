@@ -314,7 +314,7 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
 
 #### Methods:
 - getNewestComments(default $take = 10, default $commentable_type = null)
-- getUserRating(int $userId, [optional Carbon $cacheTtl])
+- getCommenterRating(int $userId, [optional Carbon $cacheTtl])
 
 #### Example:
 
