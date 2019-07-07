@@ -143,7 +143,9 @@ class CommentService
     {
         $rating = 0;
 
-        foreach (Comment::where('commenter_id', $userId)->where('rating', '!=', 0)->get('rating')->pluck('rating')
+        foreach (Comment::where('commenter_id', $userId)->where('rating', '!=', 0)
+                     ->withTrashed()
+                     ->get('rating')->pluck('rating')
                      ->toArray() as $commentRating) {
 
             if ($commentRating > 0) {
