@@ -158,4 +158,23 @@ class CommentService
 
         return $rating;
     }
+
+    /**
+     * @param CommentInterface $comment
+     * @param ICommentable $newCommentableAssociate
+     *
+     * $comment = Comment::where('id', 1)->firstOrFail();
+     * $model = Post::where('id', 2)->firstOrFail()
+     */
+    public static function moveCommentTo(CommentInterface $comment, ICommentable $newCommentableAssociate): void
+    {
+        $comment->commentable()->associate($newCommentableAssociate);
+        $comment->save();
+
+        if ($comment->children) {
+            foreach ($comment->children as $child) {
+                self::moveCommentTo($child, $newCommentableAssociate);
+            }
+        }
+    }
 }

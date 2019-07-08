@@ -309,7 +309,9 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
 
 #### Доступные методы:
 - getNewestComments(default $take = 10, default $commentable_type = null) // получитьПоследниеКомментарии
-- getCommenterRating(int $userId, [optional Carbon $cacheTtl]) // ПолучитьРейтингПользователя
+- getCommenterRating(int $userId, [optional Carbon $cacheTtl]) // получитьРейтингПользователя
+- moveCommentTo(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместитьКомментарийВ 
+
 #### Пример:
 
 ```
