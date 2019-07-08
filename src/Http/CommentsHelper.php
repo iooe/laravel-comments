@@ -56,4 +56,15 @@ class CommentsHelper
     {
         CommentService::moveCommentTo($comment, $newCommentableAssociate);
     }
+
+    /**
+     * Alias to CommentService::moveCommentTo
+     *
+     * @param CommentInterface $comment
+     * @param ICommentable $newCommentableAssociate
+     */
+    public static function moveCommentToAndRemoveParentAssociateOfRoot(CommentInterface $comment, ICommentable $newCommentableAssociate): void
+    {
+        CommentService::moveCommentToAndRemoveParentAssociateOfRoot($comment, $newCommentableAssociate);
+    }
 }

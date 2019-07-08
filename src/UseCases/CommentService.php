@@ -177,4 +177,18 @@ class CommentService
             }
         }
     }
+
+    /**
+     * @param CommentInterface $comment
+     * @param ICommentable $newCommentableAssociate
+     *
+     * $comment = Comment::where('id', 1)->firstOrFail();
+     * $model = Post::where('id', 2)->firstOrFail()
+     */
+    public static function moveCommentToAndRemoveParentAssociateOfRoot(CommentInterface $comment, ICommentable $newCommentableAssociate): void
+    {
+        $comment->parent()->dissociate();
+        $comment->save();
+        self::moveCommentTo($comment, $newCommentableAssociate);
+    }
 }
