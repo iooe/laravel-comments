@@ -311,6 +311,7 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
 - getNewestComments(default $take = 10, default $commentable_type = null) // получитьПоследниеКомментарии
 - getCommenterRating(int $userId, [optional Carbon $cacheTtl]) // получитьРейтингПользователя
 - moveCommentTo(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместитьКомментарийВ 
+- moveCommentToAndRemoveParentAssociateOfRoot(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместитьКомментарийВ 
 
 #### Пример:
 
