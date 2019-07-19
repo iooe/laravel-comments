@@ -26,6 +26,7 @@ trait Commenter
      */
     public function commentsWithChildrenAndCommenter()
     {
+        // 'allChildrenWithCommenter.commenter' needs for eager loading of first level Comment::class
         return $this->hasMany(Comment::class, 'commenter_id')
             ->with('allChildrenWithCommenter', 'allChildrenWithCommenter.commenter', 'commenter');
     }
