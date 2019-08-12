@@ -153,12 +153,16 @@ class CommentsController extends Controller
 
         try {
             CommentService::deleteComment($comment);
-            $response = ['success' => true];
+            $response = response(['message' => 'success']);
         } catch (\DomainException $e) {
-            $response = ['success' => false, 'message' => $e->getMessage()];
+            $response = response(['message' => $e->getMessage()], 401);
         }
 
-        return $request->ajax() ? $response : redirect()->back();
+        if ($request->ajax()) {
+            return $response;
+        }
+
+        return redirect()->back();
     }
 
     /**
