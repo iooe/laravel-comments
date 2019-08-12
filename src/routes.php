@@ -1,11 +1,11 @@
 <?php
 
 if (config('comments.route.root') !== null) {
-    Route::group(['prefix' => config('comments.route.root')], function () {
+    Route::group(['prefix' => config('comments.route.root')], static function () {
         /**
          * Comments
          */
-        Route::group(['prefix' => config('comments.route.group'), 'as' => 'comments.',], function () {
+        Route::group(['prefix' => config('comments.route.group'), 'as' => 'comments.',], static function () {
             Route::get('/', '\tizis\laraComments\Http\Controllers\CommentsController@get')->name('get');
             Route::post('/', '\tizis\laraComments\Http\Controllers\CommentsController@store')->name('store');
             Route::delete('/{comment}', '\tizis\laraComments\Http\Controllers\CommentsController@destroy')->name('delete');
