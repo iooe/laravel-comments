@@ -32,6 +32,7 @@ class CommentService
     public static function htmlFilter($message)
     {
         $message = '<p>' . str_replace("\n", '</p><p>', $message) . '</p>';
+
         return clean($message, [
             'HTML.Allowed' => config('comments.purifier.HTML_Allowed'),
             'AutoFormat.RemoveEmpty' => true
@@ -113,11 +114,11 @@ class CommentService
      */
     public static function deleteComment(CommentInterface $comment): void
     {
-        if (!$comment->children()->exists()) {
-            $comment->delete();
-        } else {
+        if ($comment->children()->exists()) {
             throw new \DomainException('Comment has replies');
         }
+
+        $comment->delete();
     }
 
     /**
@@ -127,11 +128,14 @@ class CommentService
     public static function ratingRecalculation(CommentInterface $comment): int
     {
         $rating = 0;
+
         foreach ($comment->votes as $vote) {
             $rating = $vote->commenter_vote === 0 ? $rating - 1 : $rating + 1;
         }
+
         $comment->rating = $rating;
         $comment->save();
+
         return $rating;
     }
 
@@ -189,6 +193,7 @@ class CommentService
     {
         $comment->parent()->dissociate();
         $comment->save();
+
         self::moveCommentTo($comment, $newCommentableAssociate);
     }
 }
