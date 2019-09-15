@@ -164,6 +164,46 @@ class CommentService
     }
 
     /**
+     * Return filtered collection of comments[only comment_id, commenter_vote] with user vote
+     *
+     * @param $user
+     * @param $comments
+     * @return mixed
+     */
+    public static function votedCommentsCheck($user, $comments)
+    {
+        $votes = $user->commentsVotes;
+
+        $commentsIds = self::recursiveCommentsIds($comments);
+        $commentsVotesIds = $votes->pluck('comment_id')->toArray();
+        $votedCommentsIds = array_intersect($commentsIds, $commentsVotesIds);
+
+        return $votes->filter(function ($item) use ($votedCommentsIds) {
+            return in_array($item->comment_id, $votedCommentsIds, true);
+        })->map(static function ($item) {
+            return $item->only(['comment_id', 'commenter_vote']);
+        });
+    }
+
+
+    /**
+     * Return array of ids of Comment and comment chuldren
+     * @param $comments
+     * @return array
+     */
+    public static function recursiveCommentsIds($comments):array
+    {
+        $commentsIds = [];
+
+        foreach ($comments as $comment) {
+            $commentsIds[] = $comment->id;
+            $commentsIds = array_merge($commentsIds, self::recursiveCommentsIds($comment->allChildrenWithCommenter));
+        }
+
+        return $commentsIds;
+    }
+
+    /**
      * @param CommentInterface $comment
      * @param ICommentable $newCommentableAssociate
      *
