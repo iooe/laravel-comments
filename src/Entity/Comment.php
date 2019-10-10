@@ -84,19 +84,40 @@ class Comment extends Model implements CommentInterface
         return $this->belongsTo(Comment::class, 'child_id');
     }
 
-    public function rating()
+    /**
+     * @return int
+     */
+    public function rating():int
     {
         return $this->rating;
     }
 
-    public function votesCount()
+    /**
+     * @return int
+     */
+    public function votesCount():int
     {
         return $this->votes()->count();
     }
 
-    public function votes()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function votes():\Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CommentVotes::class, 'comment_id');
     }
 
+    /**
+     * @param $commenterId
+     * @param $vote
+     */
+    public function addNewVoteIntoRatingRecords($commenterId, $vote)
+    {
+        $this->votes()->save(new CommentVotes([
+                'commenter_id' => $commenterId,
+                'commenter_vote' => $vote
+            ]
+        ));
+    }
 }

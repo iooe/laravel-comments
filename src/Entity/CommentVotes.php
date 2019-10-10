@@ -19,4 +19,10 @@ class CommentVotes extends Model
     {
         return $this->belongsTo(config('comments.commenter'));
     }
+
+    public function updateCommenterVote($updatedVote):void {
+        $this->update([
+            'commenter_vote' => $updatedVote
+        ]);
+    }
 }

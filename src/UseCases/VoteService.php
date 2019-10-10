@@ -63,9 +63,7 @@ class VoteService
      */
     private function update(CommentVotes $vote, int $updatedVote): void
     {
-        $vote->update([
-            'commenter_vote' => $updatedVote
-        ]);
+        $vote->updateCommenterVote($updatedVote);
     }
 
     /**
@@ -75,10 +73,6 @@ class VoteService
      */
     private function store(CommentInterface $comment, $user, int $vote): void
     {
-        $comment->votes()->save(new CommentVotes([
-                'commenter_id' => $user->id,
-                'commenter_vote' => $vote
-            ]
-        ));
+        $comment->addNewVoteIntoRatingRecords($user->id, $vote);
     }
 }
