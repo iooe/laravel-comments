@@ -99,7 +99,8 @@ class User extends Authenticatable {
          'delete' => 'delete',
          'reply' => 'reply',
          'edit' => 'edit',
-         'vote' => 'vote'
+         'vote' => 'vote',
+         'store => 'store'
      ]);
  }
  ```
@@ -111,9 +112,9 @@ class User extends Authenticatable {
  ## Examples    
 This repository include only `bootstrap4` template, but you can create you own UI. This is just a example of package features.
 
-This is examples of comments rendering using backend and `this way have bad performance` when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
+This is example of `backend`rendering, `this way have bad performance` when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
 
-`Good way` is using API, HTTP requests (AJAX) and build UI with Vue js (or any other library) with verification of user permissions for UI on frontend.
+`A good idea` is use API and build UI with Vue js (or any other library) with verification of user permissions (only for UI) on frontend.
 
 1. Build with semantic ui    
 ![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
@@ -178,7 +179,8 @@ If you don't want use  out of the box features: API, or the CommentController, b
 
  `CommentService` class used inside default comment controller for request processing. 
 
-To disable API routes by default, set the `route.root => null` config value
+To disable API routes by default, set the `route.root => null` config value.
+
 **Methods**:
 1. Сreate comment: `CommentService::createComment`
   ```
@@ -237,7 +239,7 @@ Sometimes additional processing of content is necessary before transmission over
     ]
 ``` 
 
-#### 3. Contact     
+#### 3. Contract     
  Create preprocessor class and implement `ICommentPreprocessor` interface:      
  
  **Examples**:
