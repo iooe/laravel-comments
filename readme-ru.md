@@ -308,10 +308,10 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
  ` use tizis\laraComments\Http\CommentsHelper;` 
 
 #### Доступные методы:
-- getNewestComments(default $take = 10, default $commentable_type = null) // получитьПоследниеКомментарии
-- getCommenterRating(int $userId, [optional Carbon $cacheTtl]) // получитьРейтингПользователя
-- moveCommentTo(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместитьКомментарийВ 
-- moveCommentToAndRemoveParentAssociateOfRoot(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместитьКомментарийВ 
+- getNewestComments(default $take = 10, default $commentable_type = null) // получить Последние Комментарии
+- getCommenterRating(int $userId, [optional Carbon $cacheTtl]) // получить Рейтинг Пользователя
+- moveCommentTo(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместить Комментарий
+- moveCommentToAndRemoveParentAssociateOfRoot(CommentInterface $comment, ICommentable $newCommentableAssociate) // переместить Комментарий И Удалить Связь С Родителем
 
 #### Пример:
 
