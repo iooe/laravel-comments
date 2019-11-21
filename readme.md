@@ -20,8 +20,14 @@
 ## Requirements 
 - php 7.1 + 
 - laravel 5.6 +      
+- `Your application should contain auth module.`
+```bash 
+Laravel 6.x: [https://laravel.com/docs/6.x/authentication](https://laravel.com/docs/6.x/authentication)
+Laravel 5.6: [https://laravel.com/docs/5.6/authentication](https://laravel.com/docs/5.6/authentication)
+```   
 
 ## Installation 
+
 ```bash 
 composer require tizis/lara-comments 
 ```   
