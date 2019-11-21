@@ -58,7 +58,7 @@ class CommentsHelper
     }
 
     /**
-     * Alias to CommentService::moveCommentTo
+     * Alias to CommentService::moveCommentToAndRemoveParentAssociateOfRoot
      *
      * @param CommentInterface $comment
      * @param ICommentable $newCommentableAssociate
