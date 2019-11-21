@@ -19,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
             'delete' => 'delete',
             'reply' => 'reply',
             'edit' => 'edit',
-            'vote' => 'vote'
+            'vote' => 'vote',
+            'store' => 'store'
         ]);
     }
 }
