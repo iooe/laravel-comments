@@ -113,18 +113,6 @@ class User extends Authenticatable {
      'policy_prefix' => 'comments_custom',
  ```
  
- ## Examples    
-This repository include only `bootstrap4` template, but you can create you own UI. This is just a example of package features.
-
-This is example of `backend`rendering, `this way have bad performance` when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
-
-`A good idea` is use API and build UI with Vue js (or any other library) with verification of user permissions (only for UI) on frontend.
-
-1. Build with semantic ui    
-![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
-2. Build with bootstrap 4    
-![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
-      
  ### Publish Config & configure (optional)        
  In the `config` file you can specify:        
         
@@ -330,3 +318,17 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
 CommentsHelper::getNewestComments(20) // Return last 20 comments
 CommentsHelper::getNewestComments(20, Book::class) // Return last 20 comments of Book model
 ``` 
+
+
+ ## Examples    
+This repository include only `bootstrap4` template, but you can create you own UI. This is just a example of package features.
+
+This is example of `backend`rendering, `this way have bad performance` when 100+ comments on post due to the need to check user permissions (reply, edit, delete etc) for each comment. 
+
+`A good idea` is use API and build UI with Vue js (or any other library) with verification of user permissions (only for UI) on frontend.
+
+1. Build with semantic ui    
+![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
+2. Build with bootstrap 4    
+![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
+      
