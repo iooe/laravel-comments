@@ -3,7 +3,6 @@
 namespace tizis\laraComments\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
-use tizis\laraComments\Entity\Comment;
 
 /**
  * Commentable model Interface

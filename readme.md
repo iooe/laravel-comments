@@ -117,6 +117,7 @@ class User extends Authenticatable {
  In the `config` file you can specify:        
         
 - where is your User model located; the default is `\App\User::class` 
+- where is your Comment model located; the default is `\App\Comment::class` 
 - policy prefix, you can create custom policy class and extends `tizis\laraComments\Policies\CommentPolicy;`    
 - allow tags for html filter    
 - API prefix  

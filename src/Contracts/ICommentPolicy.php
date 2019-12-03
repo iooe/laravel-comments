@@ -2,8 +2,6 @@
 
 namespace tizis\laraComments\Contracts;
 
-use tizis\laraComments\Entity\Comment;
-
 /**
  * Comment auth policy
  *

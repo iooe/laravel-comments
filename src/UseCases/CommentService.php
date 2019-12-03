@@ -4,7 +4,6 @@ namespace tizis\laraComments\UseCases;
 
 use tizis\laraComments\Contracts\Comment as CommentInterface;
 use tizis\laraComments\Contracts\ICommentable;
-use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Http\Requests\GetRequest;
 
 class CommentService
@@ -16,7 +15,7 @@ class CommentService
      */
     public static function getNewestComments($take = 10, $commentable_type = null)
     {
-        return Comment::take($take)
+        return config('comments.models.comment')::take($take)
             ->when($commentable_type !== null, function ($q) use ($commentable_type) {
                 return $q->where('commentable_type', $commentable_type);
             })
@@ -147,7 +146,7 @@ class CommentService
     {
         $rating = 0;
 
-        foreach (Comment::where('commenter_id', $userId)->where('rating', '!=', 0)
+        foreach (config('comments.models.comment')::where('commenter_id', $userId)->where('rating', '!=', 0)
                      ->withTrashed()
                      ->get('rating')->pluck('rating')
                      ->toArray() as $commentRating) {

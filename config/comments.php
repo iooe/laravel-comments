@@ -2,7 +2,16 @@
 
 return [
     // The model which creates the comments aka the User model
-    'commenter' => \App\User::class,
+    'models' => [
+        /**
+         * Commenter model
+         */
+        'commenter' => \App\User::class,
+        /**
+         * Comment model
+         */
+        'comment' => \App\Comment::class
+    ],
     'ui' => 'bootstrap4',
     'purifier' => [
         'HTML_Allowed' => 'p',

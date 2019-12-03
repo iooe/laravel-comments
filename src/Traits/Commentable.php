@@ -2,7 +2,6 @@
 
 namespace tizis\laraComments\Traits;
 
-use tizis\laraComments\Entity\Comment;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -25,7 +24,7 @@ trait Commentable
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(config('comments.models.comment'), 'commentable');
     }
 
     /**
@@ -35,7 +34,7 @@ trait Commentable
      */
     public function commentsWithChildrenAndCommenter()
     {
-        return $this->morphMany(Comment::class, 'commentable')
+        return $this->morphMany(config('comments.models.comment'), 'commentable')
             ->with('allChildrenWithCommenter', 'allChildrenWithCommenter.commenter', 'commenter');
     }
 

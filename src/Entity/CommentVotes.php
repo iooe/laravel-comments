@@ -17,7 +17,7 @@ class CommentVotes extends Model
      */
     public function commenter()
     {
-        return $this->belongsTo(config('comments.commenter'));
+        return $this->belongsTo(config('comments.models.commenter'));
     }
 
     public function updateCommenterVote($updatedVote):void {

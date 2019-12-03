@@ -3,7 +3,7 @@
 namespace tizis\laraComments\Policies;
 
 use tizis\laraComments\Contracts\ICommentPolicy;
-use tizis\laraComments\Entity\Comment;
+use tizis\laraComments\Contracts\Comment;
 
 class CommentPolicy implements ICommentPolicy
 {

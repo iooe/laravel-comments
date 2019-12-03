@@ -31,7 +31,7 @@ class Comment extends Model implements CommentInterface
      */
     public function children()
     {
-        return $this->hasMany(Comment::class, 'child_id');
+        return $this->hasMany(config('comments.models.comment'), 'child_id');
     }
 
     /**
@@ -41,7 +41,7 @@ class Comment extends Model implements CommentInterface
      */
     public function allChildrenWithCommenter()
     {
-        return $this->hasMany(Comment::class, 'child_id')
+        return $this->hasMany(config('comments.models.comment'), 'child_id')
             ->with('allChildrenWithCommenter', 'commenter');
     }
 
@@ -61,7 +61,7 @@ class Comment extends Model implements CommentInterface
      */
     public function commenter()
     {
-        return $this->belongsTo(config('comments.commenter'));
+        return $this->belongsTo(config('comments.models.commenter'));
     }
 
     /**
@@ -81,13 +81,13 @@ class Comment extends Model implements CommentInterface
      */
     public function parent()
     {
-        return $this->belongsTo(Comment::class, 'child_id');
+        return $this->belongsTo(config('comments.models.comment'), 'child_id');
     }
 
     /**
      * @return int
      */
-    public function rating():int
+    public function rating(): int
     {
         return $this->rating;
     }
@@ -95,7 +95,7 @@ class Comment extends Model implements CommentInterface
     /**
      * @return int
      */
-    public function votesCount():int
+    public function votesCount(): int
     {
         return $this->votes()->count();
     }
@@ -103,7 +103,7 @@ class Comment extends Model implements CommentInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function votes():\Illuminate\Database\Eloquent\Relations\HasMany
+    public function votes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CommentVotes::class, 'comment_id');
     }

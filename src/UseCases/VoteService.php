@@ -4,14 +4,13 @@ namespace tizis\laraComments\UseCases;
 
 use DB;
 use tizis\laraComments\Contracts\Comment as CommentInterface;
-use tizis\laraComments\Entity\Comment;
 use tizis\laraComments\Entity\CommentVotes;
 
 class VoteService
 {
     /**
      * @param $user
-     * @param Comment $comment
+     * @param CommentInterface $comment
      * @param int $vote
      * @throws \Throwable
      */
