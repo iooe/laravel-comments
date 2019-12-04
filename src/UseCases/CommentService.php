@@ -102,6 +102,7 @@ class CommentService
 
         $comment->rating = 0;
         $comment->comment = $message;
+        $comment->updated_at = null;
         $comment->save();
 
         return $comment;
