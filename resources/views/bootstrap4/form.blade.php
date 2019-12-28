@@ -2,8 +2,8 @@
     <div class="card-body">
         <form method="POST" action="{{ route('comments.store') }}">
             @csrf
-            <input type="hidden" name="commentable_type" value="\{{ get_class($model) }}"/>
-            <input type="hidden" name="commentable_id" value="{{ $model->id }}"/>
+            <input type="hidden" name="commentable_type" value="\{{ $model->modelType() }}"/>
+            <input type="hidden" name="commentable_id" value="{{ $model->modelIdent() }}"/>
             <div class="form-group">
                 <label for="message">Enter your message here:</label>
                 <textarea class="form-control @if($errors->has('message')) is-invalid @endif" name="message"
