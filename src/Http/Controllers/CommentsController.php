@@ -48,15 +48,41 @@ class CommentsController extends Controller
 
         $modelPath = $request->commentable_type;
 
+        /*
+         * Model is rewriting?
+         */
+        $rewriteModel = array_flip( config('comments.rewriteModel', []) );
+        $isRewriting = false;
+        if( isset($rewriteModel[$modelPath]) )
+        {
+            $modelPath = $rewriteModel[$modelPath];
+            $isRewriting = true;
+        }
+        /***/
+
         if (!CommentService::modelIsExists($modelPath)) {
-            throw new \DomainException('Model don\'t exists');
+            throw new \DomainException($isRewriting ? 'Rewrite model don\'t exists' : 'Model don\'t exists');
         }
 
         if (!CommentService::isCommentable(new $modelPath)) {
             throw new \DomainException('Model is\'t commentable');
         }
 
-        $model = $modelPath::findOrFail($request->commentable_id);
+        /*
+         * Find method
+         */
+        $rewriteFindMethod = config('comments.rewriteFindMethod', []);
+        $findMethod = 'findOrFail';
+        if( isset($rewriteFindMethod[$modelPath]) )
+        {
+            $findMethod = $rewriteFindMethod[$modelPath];
+            if (!method_exists ($modelPath, $findMethod)) {
+                throw new \DomainException('Rewrite method not exists');
+            }
+        }
+        /***/
+
+        $model = $modelPath::$findMethod($request->commentable_id);
 
         $comment = CommentService::createComment(
             new Comment(),
@@ -83,15 +109,43 @@ class CommentsController extends Controller
         $modelId = $request->commentable_id;
         $orderBy = CommentService::orderByRequestAdapter($request);
 
+        /*
+         * Model is rewriting?
+         */
+        $rewriteModel = array_flip( config('comments.rewriteModel', []) );
+        $isRewriting = false;
+        if( isset($rewriteModel[$modelPath]) )
+        {
+            $modelPath = $rewriteModel[$modelPath];
+            $isRewriting = true;
+        }
+        /***/
+
         if (!CommentService::modelIsExists($modelPath)) {
-            throw new \DomainException('Model don\'t exists');
+            throw new \DomainException($isRewriting ? 'Rewrite model don\'t exists' : 'Model don\'t exists');
         }
 
         if (!CommentService::isCommentable(new $modelPath)) {
             throw new \DomainException('Model is\'t commentable');
         }
 
-        $model = $modelPath::where('id', $modelId)->first();
+        /*
+         * Find method
+         */
+        $rewriteFindMethod = config('comments.rewriteFindMethod', []);
+        $findMethod = 'findOrFail';
+        if( isset($rewriteFindMethod[$modelPath]) )
+        {
+            $findMethod = $rewriteFindMethod[$modelPath];
+            if (!method_exists ($modelPath, $findMethod)) {
+                throw new \DomainException('Rewrite method not exists');
+            }
+        }
+        /***/
+
+        $model = $modelPath::$findMethod($request->commentable_id);
+
+        $model = $modelPath::where('id', $model->id)->first();
 
         $response = [
             'success' => true,
