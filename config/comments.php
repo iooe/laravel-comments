@@ -39,5 +39,12 @@ return [
                 'comment' => null
             ]
         ]
-    ]
+    ],
+    /**
+    * Rewrite the original model name with an arbitrary name.
+    * @example ['SuperPostModel'] => App\Post::class,
+    */
+    'rewriteModel' =>[],
+    
+    
 ];
