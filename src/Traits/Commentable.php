@@ -45,4 +45,55 @@ trait Commentable
     {
         return $query->withCount('comments');
     }
+    
+    /**
+     * Return attribute for use as ident
+     *
+     * @return int
+     */
+    public function modelIdent()
+    {
+        $idAttribute = 'id';
+
+        $modelPath = get_class($this);
+        if( substr($modelPath, 0, 1) != '\\')
+        {
+            $modelPath = '\\' . $modelPath;
+        }
+
+        $rewriteIdAttribute = config('comments.rewriteIdAttribute', []);
+
+        if( isset($rewriteIdAttribute[$modelPath]) )
+        {
+            $idAttribute = $rewriteIdAttribute[$modelPath];
+            if ( !method_exists ($modelPath, 'get'.$idAttribute.'Attribute') && !property_exists($modelPath, $idAttribute) ) {
+                throw new \DomainException('Rewrite id attribute not exists');
+            }
+        }
+
+        return $this->{$idAttribute};
+    }
+
+
+    /**
+     * Return model name or fake name
+     *
+     * @return string
+     */
+    public function modelType()
+    {
+        $modelPath = get_class($this);
+        if( substr($modelPath, 0, 1) != '\\')
+        {
+            $modelPath = '\\' . $modelPath;
+        }
+
+        $rewriteModel = config('comments.rewriteModel', []);
+        if( isset($rewriteModel[$modelPath]) )
+        {
+            $modelPath = $rewriteModel[$modelPath];
+        }
+
+        return $modelPath;
+    }    
 }
