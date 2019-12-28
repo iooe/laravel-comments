@@ -40,11 +40,40 @@ return [
             ]
         ]
     ],
+    
+/**
+     * Rewrite the original model name with an arbitrary name.
+     * (This can be useful if you want to hide the original path of the model.)
+     *
+     * `'\Path\To\Real\Model' => 'FakeModelName',`
+     * @example '\App\Post' => 'SuperPostModel',
+     */
+    'rewriteModel' => [],
+
     /**
-    * Rewrite the original model name with an arbitrary name.
-    * @example ['SuperPostModel'] => App\Post::class,
-    */
-    'rewriteModel' =>[],
+     * Rewrite the original model name with an arbitrary name.
+     * (This can be useful if you want to hide the original path of the model.)
+     *
+     * `'\Path\To\Real\Model' => 'myVirtualIdAttribute',`
+     * @example '\App\Post' => 'myId',
+     * and in your Post class added method for virtual attribute:
+     * @example `public function getMyIdAttribute(){ return $this->id;}`
+     */
+    'rewriteIdAttribute' => [],
+
+
+    /**
+     * Rewrite the standard (`findOrFail`) search method for records in the commented model.
+     * (This can be useful if you want to hide the original id.)
+     *
+     * `'Path\To\Model' => 'methodName',`
+     * @example '\App\Post' =>  'myMethod' ,
+     * and in your Post class added method for finding record:
+     * @example `public static function myFindMethod($id){ return self::findOrFail($id);}`
+     *
+     * As a result, the method will be called: App\Post::myFindMethod($request->commentable_id);
+     */
+    'rewriteFindMethod' => [],
     
     
 ];
