@@ -53,7 +53,7 @@ trait Commentable
      */
     public function modelIdent()
     {
-        $idAttribute = 'id';
+        $idAttribute = $this->getKeyName();
 
         $modelPath = get_class($this);
         if( substr($modelPath, 0, 1) != '\\')
@@ -66,7 +66,7 @@ trait Commentable
         if( isset($rewriteIdAttribute[$modelPath]) )
         {
             $idAttribute = $rewriteIdAttribute[$modelPath];
-            if ( !method_exists ($modelPath, 'get'.$idAttribute.'Attribute') && !property_exists($modelPath, $idAttribute) ) {
+            if ( !method_exists ($modelPath, 'get'.$idAttribute.'Attribute') ) {
                 throw new \DomainException('Rewrite id attribute not exists');
             }
         }
