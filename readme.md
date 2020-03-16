@@ -17,7 +17,7 @@
 - [x] API for basic function: get, update, delete, create      
 - [x] HTML filter customization (using HTMLPurifier)      
         
-## [Upgrade guides](#upgrade-guides)
+## [Upgrade guides → ](#upgrade-guides)
 + [From 2.x.x to 3.0](#from-2xx-to-30) 
 
 ## Requirements 
