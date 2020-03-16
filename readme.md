@@ -338,7 +338,7 @@ This is example of `backend`rendering, `this way have bad performance` when 100+
 ![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
 
 
-##Upgrade-guides
+## Upgrade guides
 ### From 2.x.x to 3.0
 `commentable_type`  and  `commentable_id` request attributes was merged into single ```commentable_encrypted_key``` 
  
