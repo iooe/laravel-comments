@@ -16,179 +16,189 @@ use tizis\laraComments\Http\Requests\ShowRequest;
 use tizis\laraComments\Http\Resources\CommentResource;
 use tizis\laraComments\UseCases\CommentService;
 use tizis\laraComments\UseCases\VoteService;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class CommentsController extends Controller
 {
-    use AuthorizesRequests;
+	use AuthorizesRequests;
 
-    protected $commentService;
-    protected $voteService;
-    protected $policyPrefix;
+	protected $commentService;
+	protected $voteService;
+	protected $policyPrefix;
 
-    /**
-     * CommentsController constructor.
-     * @param VoteService $voteService
-     */
-    public function __construct(VoteService $voteService)
-    {
-        $this->middleware(['web', 'auth'], ['except' => ['get']]);
-        $this->policyPrefix = config('comments.policy_prefix');
-        $this->voteService = $voteService;
-    }
+	/**
+	 * CommentsController constructor.
+	 * @param VoteService $voteService
+	 */
+	public function __construct(VoteService $voteService)
+	{
+		$this->middleware(['web', 'auth'], ['except' => ['get']]);
+		$this->policyPrefix = config('comments.policy_prefix');
+		$this->voteService = $voteService;
+	}
 
-    /**
-     * Creates a new comment for given model.
-     * @param SaveRequest $request
-     * @return array|\Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function store(SaveRequest $request)
-    {
-        $this->authorize($this->policyPrefix . '.store');
+	/**
+	 * Creates a new comment for given model.
+	 * @param SaveRequest $request
+	 * @return array|\Illuminate\Http\RedirectResponse
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+	public function store(SaveRequest $request)
+	{
+		$this->authorize($this->policyPrefix . '.store');
 
-        $modelPath = $request->commentable_type;
+		try {
+			$decryptedModelData = decrypt($request->commentable_encrypted_key);
 
-        if (!CommentService::modelIsExists($modelPath)) {
-            throw new \DomainException('Model don\'t exists');
-        }
+			$commentableId = $decryptedModelData['id'];
+			$modelPath = $decryptedModelData['type'];
 
-        if (!CommentService::isCommentable(new $modelPath)) {
-            throw new \DomainException('Model is\'t commentable');
-        }
+		} catch (DecryptException $e) {
+			throw new \DomainException('Decryption error');
+		}
 
-        $model = $modelPath::findOrFail($request->commentable_id);
+		if (!CommentService::modelIsExists($modelPath)) {
+			throw new \DomainException('Model don\'t exists');
+		}
 
-        $comment = CommentService::createComment(
-            new Comment(),
-            Auth::user(),
-            $model,
-            CommentService::htmlFilter($request->message)
-        );
+		if (!CommentService::isCommentable(new $modelPath)) {
+			throw new \DomainException('Model is\'t commentable');
+		}
 
-        return $request->ajax()
-            ? [
-                'success' => true,
-                'comment' => new CommentResource($comment)
-            ]
-            : redirect()->to(url()->previous() . '#comment-' . $comment->id);
-    }
+		$model = $modelPath::findOrFail($commentableId);
 
-    /**
-     * @param GetRequest $request
-     * @return array
-     */
-    public function get(GetRequest $request): array
-    {
-        $modelPath = $request->commentable_type;
-        $modelId = $request->commentable_id;
-        $orderBy = CommentService::orderByRequestAdapter($request);
+		$comment = CommentService::createComment(
+			new Comment(),
+			Auth::user(),
+			$model,
+			CommentService::htmlFilter($request->message)
+		);
 
-        if (!CommentService::modelIsExists($modelPath)) {
-            throw new \DomainException('Model don\'t exists');
-        }
+		return $request->ajax()
+			? [
+				'success' => true,
+				'comment' => new CommentResource($comment)
+			]
+			: redirect()->to(url()->previous() . '#comment-' . $comment->id);
+	}
 
-        if (!CommentService::isCommentable(new $modelPath)) {
-            throw new \DomainException('Model is\'t commentable');
-        }
+	/**
+	 * @param GetRequest $request
+	 * @return array
+	 */
+	public function get(GetRequest $request): array
+	{
+		$decryptedModelData = decrypt($request->commentable_encrypted_key);
 
-        $model = $modelPath::where('id', $modelId)->first();
+		$modelId = $decryptedModelData['id'];
+		$modelPath = $decryptedModelData['type'];
 
-        $response = [
-            'success' => true,
-            'comments' => CommentResource::collection(
-                $model->commentsWithChildrenAndCommenter()
-                    ->parentless()
-                    ->orderBy($orderBy['column'], $orderBy['direction'])
-                    ->get()
-            ),
-            'count' => $model->commentsWithChildrenAndCommenter()->count()
-        ];
+		$orderBy = CommentService::orderByRequestAdapter($request);
 
-        return $response;
-    }
+		if (!CommentService::modelIsExists($modelPath)) {
+			throw new \DomainException('Model don\'t exists');
+		}
 
-    /**
-     * @param Comment $comment
-     * @param Request $request
-     * @return array
-     */
-    public function show(Comment $comment, Request $request): array
-    {
-        return [
-            'comment' => $request->input('raw') ? $comment : new CommentResource($comment)
-        ];
-    }
+		if (!CommentService::isCommentable(new $modelPath)) {
+			throw new \DomainException('Model is\'t commentable');
+		}
 
-    /**
-     * Updates the message of the comment.
-     * @param EditRequest $request
-     * @param Comment $comment
-     * @return array|\Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function update(EditRequest $request, Comment $comment)
-    {
-        $this->authorize($this->policyPrefix . '.edit', $comment);
+		$model = $modelPath::where('id', $modelId)->first();
 
-        CommentService::updateComment(
-            $comment,
-            CommentService::htmlFilter($request->message)
-        );
+		return [
+			'success' => true,
+			'comments' => CommentResource::collection(
+				$model->commentsWithChildrenAndCommenter()
+					->parentless()
+					->orderBy($orderBy['column'], $orderBy['direction'])
+					->get()
+			),
+			'count' => $model->commentsWithChildrenAndCommenter()->count()
+		];
+	}
 
-        return $request->ajax()
-            ? ['success' => true, 'comment' => new CommentResource($comment)]
-            : redirect()->to(url()->previous() . '#comment-' . $comment->id);
-    }
+	/**
+	 * @param Comment $comment
+	 * @param Request $request
+	 * @return array
+	 */
+	public function show(Comment $comment, Request $request): array
+	{
+		return [
+			'comment' => $request->input('raw') ? $comment : new CommentResource($comment)
+		];
+	}
 
-    /**
-     * Deletes a comment.
-     * @param Request $request
-     * @param Comment $comment
-     * @return array|\Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function destroy(Request $request, Comment $comment)
-    {
-        $this->authorize($this->policyPrefix . '.delete', $comment);
+	/**
+	 * Updates the message of the comment.
+	 * @param EditRequest $request
+	 * @param Comment $comment
+	 * @return array|\Illuminate\Http\RedirectResponse
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+	public function update(EditRequest $request, Comment $comment)
+	{
+		$this->authorize($this->policyPrefix . '.edit', $comment);
 
-        try {
-            CommentService::deleteComment($comment);
-            $response = response(['message' => 'success']);
-        } catch (\DomainException $e) {
-            $response = response(['message' => $e->getMessage()], 401);
-        }
+		CommentService::updateComment(
+			$comment,
+			CommentService::htmlFilter($request->message)
+		);
 
-        if ($request->ajax()) {
-            return $response;
-        }
+		return $request->ajax()
+			? ['success' => true, 'comment' => new CommentResource($comment)]
+			: redirect()->to(url()->previous() . '#comment-' . $comment->id);
+	}
 
-        return redirect()->back();
-    }
+	/**
+	 * Deletes a comment.
+	 * @param Request $request
+	 * @param Comment $comment
+	 * @return array|\Illuminate\Http\RedirectResponse
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+	public function destroy(Request $request, Comment $comment)
+	{
+		$this->authorize($this->policyPrefix . '.delete', $comment);
 
-    /**
-     * Reply to comment
-     *
-     * @param Request $request
-     * @param Comment $comment
-     * @return array|\Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function reply(ReplyRequest $request, Comment $comment)
-    {
-        $this->authorize($this->policyPrefix . '.reply', $comment);
+		try {
+			CommentService::deleteComment($comment);
+			$response = response(['message' => 'success']);
+		} catch (\DomainException $e) {
+			$response = response(['message' => $e->getMessage()], 401);
+		}
 
-        $reply = CommentService::createComment(
-            new Comment(),
-            Auth::user(),
-            $comment->commentable,
-            CommentService::htmlFilter($request->message),
-            $comment
-        );
+		if ($request->ajax()) {
+			return $response;
+		}
 
-        return $request->ajax()
-            ? ['success' => true, 'comment' => new CommentResource($reply)]
-            : redirect()->to(url()->previous() . '#comment-' . $reply->id);
-    }
+		return redirect()->back();
+	}
+
+	/**
+	 * Reply to comment
+	 *
+	 * @param Request $request
+	 * @param Comment $comment
+	 * @return array|\Illuminate\Http\RedirectResponse
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function reply(ReplyRequest $request, Comment $comment)
+	{
+		$this->authorize($this->policyPrefix . '.reply', $comment);
+
+		$reply = CommentService::createComment(
+			new Comment(),
+			Auth::user(),
+			$comment->commentable,
+			CommentService::htmlFilter($request->message),
+			$comment
+		);
+
+		return $request->ajax()
+			? ['success' => true, 'comment' => new CommentResource($reply)]
+			: redirect()->to(url()->previous() . '#comment-' . $reply->id);
+	}
 
 }

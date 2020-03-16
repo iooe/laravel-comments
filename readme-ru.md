@@ -1,6 +1,7 @@
+
 # laraComments        
  Данная библиотека может быть использована для добавления возможности комментирования любой модели (Laravel model) в вашем приложении.
-                    
+   
 ### Возможности 
 - [x] Просмотр комментариев        
 - [x] Создание комментария
@@ -15,12 +16,16 @@
 - [x] HTML фильтр для комментариев, с возможностью изменения правил (Используется библиотека HTMLPurifier)      
 
         
+## [Руководства по обновлению](#upgrade-guides)
++ [From 2.x.x to 3.0](#from-2xx-to-30) 
+                           
 ## Требования 
 - php 7.1 + 
 - laravel 5.6 +      
 - `В вашем приложении должент быть установлен модуль аутентификации:`
     - Laravel 6.x: [https://laravel.com/docs/6.x/authentication](https://laravel.com/docs/6.x/authentication)
     - Laravel 5.6: [https://laravel.com/docs/5.6/authentication](https://laravel.com/docs/5.6/authentication)
+
 
 ## Установка 
 ```bash 
@@ -154,7 +159,7 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 ``` 
 @comments(['model' => $book]) @endcomments   
 ``` 
-В примере, мы передаем модель книги в качестве аргумента `model`. Из нее автоматически считывается информации об `commentable_type` и `commentable_id`.
+В примере, мы передаем модель книги в качестве аргумента `model`. Из нее автоматически считывается информации об `commentable_encrypted_key`.
 
 Также, библиотека автоматически считывает вошел пользователь в систему, или нет.
         
@@ -164,8 +169,8 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 
 |Title| Method |  Url | Params| Route name |
 |--|--|--| -- | --|
-|Получить комментарии |GET |  /api/comments/ | commentable_type, commentable_id, order_by (column name, default is id), order_direction (default is asc) |  route('comments.get') |
-|Сохранить комментарий| POST | /api/comments/ | commentable_type, commentable_id, message |route('comments.store') | 
+|Получить комментарии |GET |  /api/comments/ | commentable_encrypted_key, order_by (column name, default is id), order_direction (default is asc) |  route('comments.get') |
+|Сохранить комментарий| POST | /api/comments/ | commentable_encrypted_key, message |route('comments.store') | 
 |Удалить комментарий|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
 |Изменить комментарий|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
 |Ответить на комментарий|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
@@ -183,7 +188,8 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 1. Создание комментария: `CommentService::createComment`
   ```
   $user = Auth::user();
-  $model = $model = Post::findOrFail($request->commentable_id);
+  $modelId = decrypt($request->commentable_encrypted_key)['id']; // считывание ид из зашифрованного ключа  
+  $model = Post::findOrFail($modelId);
   $message = '123'
   
   $parent = rand(1, 100); // Необязательный параметр
@@ -322,4 +328,23 @@ Posts::withCommentsCount()->orderBy('id', 'desc')->get()
 ```
 CommentsHelper::getNewestComments(20) // Возвращает последние 20 комментариев 
 CommentsHelper::getNewestComments(20, Book::class) // Возвращает последние 20 комментариев модели Книги
+``` 
+
+## Upgrade guides
+### From 2.x.x to 3.0
+Аттрибуты запроса `commentable_type`  и  `commentable_id` были объединены в один аттрибут```commentable_encrypted_key``` 
+ 
+Вам нужно заменить все вызовы устаревших аттрибутов.
+
+Пример:
+
+```
+Old /bootstrap4/form.blade.php
+<input type="hidden" name="commentable_type" value="\{{ get_class($model) }}"/>
+<input type="hidden" name="commentable_id" value="{{ $model->id }}"/>
+
+``` 
+```
+New /bootstrap4/form.blade.php
+<input type="hidden" name="commentable_encrypted_key" value="{{ $model->getEncryptedKey() }}"/>
 ``` 

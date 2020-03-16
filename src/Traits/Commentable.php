@@ -45,4 +45,9 @@ trait Commentable
     {
         return $query->withCount('comments');
     }
+
+	public function getEncryptedKey()
+	{
+		return encrypt(['type' => get_class($this), 'id' => $this->attributes['id']]);
+	}
 }

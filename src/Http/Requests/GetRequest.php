@@ -9,8 +9,7 @@ class GetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'commentable_type' => 'required|string',
-            'commentable_id' => 'required|integer|min:1',
+			'commentable_encrypted_key' => 'required|string',
             'order_by' => 'string|min:1|max:11'
         ];
     }

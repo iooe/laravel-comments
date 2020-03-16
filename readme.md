@@ -17,6 +17,9 @@
 - [x] API for basic function: get, update, delete, create      
 - [x] HTML filter customization (using HTMLPurifier)      
         
+## [Upgrade guides](#upgrade-guides)
++ [From 2.x.x to 3.0](#from-2xx-to-30) 
+
 ## Requirements 
 - php 7.1 + 
 - laravel 5.6 +      
@@ -159,8 +162,8 @@ If you open the page containing the view where you have placed the above code, y
 
 |Title| Method |  Url | Params| Route name |
 |--|--|--| -- | --|
-|Get comments|GET |  /api/comments/ | commentable_type, commentable_id, order_by (column name, default is id), order_direction (default is asc) |  route('comments.get') |
-|Store comment| POST | /api/comments/ | commentable_type, commentable_id, message |route('comments.store') | 
+|Get comments|GET |  /api/comments/ | commentable_encrypted_key, order_by (column name, default is id), order_direction (default is asc) |  route('comments.get') |
+|Store comment| POST | /api/comments/ | commentable_encrypted_key, message |route('comments.store') | 
 |Delete comment|DELETE|/api/comments/{comment_id}| -- | route('comments.delete', $comment_id)  |
 |Edit comment|POST|/api/comments/{comment_id}| message|  route('comments.update', $comment_id)
 |Reply to comment|POST|/api/comments/{comment_id}| message | route('comments.reply', $comment_id)
@@ -178,7 +181,8 @@ To disable API routes by default, set the `route.root => null` config value.
 1. Сreate comment: `CommentService::createComment`
   ```
   $user = Auth::user();
-  $model = $model = Post::findOrFail($request->commentable_id);
+  $modelId = decrypt($request->commentable_encrypted_key)['id']; // get model id from encrypted model key 
+  $model = $model = Post::findOrFail($modelId);
   $message = '123'
   
   $parent = rand(1, 100); // optional
@@ -332,4 +336,23 @@ This is example of `backend`rendering, `this way have bad performance` when 100+
 ![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
 2. Build with bootstrap 4    
 ![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
-      
+
+
+##Upgrade-guides
+### From 2.x.x to 3.0
+`commentable_type`  and  `commentable_id` request attributes was merged into single ```commentable_encrypted_key``` 
+ 
+You need to replace these deprecated attributes.
+
+Example:
+
+```
+Old /bootstrap4/form.blade.php
+<input type="hidden" name="commentable_type" value="\{{ get_class($model) }}"/>
+<input type="hidden" name="commentable_id" value="{{ $model->id }}"/>
+
+``` 
+```
+New /bootstrap4/form.blade.php
+<input type="hidden" name="commentable_encrypted_key" value="{{ $model->getEncryptedKey() }}"/>
+``` 

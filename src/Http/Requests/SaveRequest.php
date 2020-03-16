@@ -9,8 +9,7 @@ class SaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'commentable_type' => 'required|string',
-            'commentable_id' => 'required|integer|min:1',
+			'commentable_encrypted_key' => 'required|string',
             'message' => 'required|string'
         ];
     }
