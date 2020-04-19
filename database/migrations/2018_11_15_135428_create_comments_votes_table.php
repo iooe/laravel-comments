@@ -31,6 +31,6 @@ class CreateCommentsVotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments_votes');
+        Schema::dropIfExists('comment_votes');
     }
 }
