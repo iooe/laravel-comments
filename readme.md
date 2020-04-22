@@ -147,8 +147,14 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
   In the view where you want to display comments, place this code and modify it:        
         
 ``` 
-@comments(['model' => $book])  
-@endcomments   
+laravel 6
+
+@comments(['model' => $post]) @endcomments   
+``` 
+``` 
+Laravel 7
+
+<x-comments :model="$post"/>  
 ``` 
 In the example above we are setting argument the `model` as class of the book model. 
 

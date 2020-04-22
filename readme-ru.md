@@ -157,7 +157,14 @@ php artisan vendor:publish --provider="tizis\laraComments\Providers\ServiceProvi
 ### 1. Рендеринг на стороне сервера:  
   В том месте представления (view), где вы желаете вывести комментарии, вставьте этот код:      
 ``` 
-@comments(['model' => $book]) @endcomments   
+laravel 6
+
+@comments(['model' => $post]) @endcomments   
+``` 
+``` 
+Laravel 7
+
+<x-comments :model="$post"/>  
 ``` 
 В примере, мы передаем модель книги в качестве аргумента `model`. Из нее автоматически считывается информации об `commentable_encrypted_key`.
 
