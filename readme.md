@@ -338,9 +338,8 @@ This is example of `backend`rendering, `this way have bad performance` when 100+
 
 `A good idea` is use API and build UI with Vue js (or any other library) with verification of user permissions (only for UI) on frontend.
 
-1. Build with semantic ui    
-![2222d](https://user-images.githubusercontent.com/16865573/48430226-0124c680-e799-11e8-9341-daac331236b2.png)      
-2. Build with bootstrap 4    
+
+1. Build with bootstrap 4    
 ![3333](https://user-images.githubusercontent.com/16865573/48430227-0124c680-e799-11e8-8cdb-8dd042155550.png)      
 
 
