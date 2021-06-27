@@ -19,21 +19,17 @@ class VoteService
         DB::transaction(function () use ($user, $comment, $vote) {
             $oldVoteEntity = $comment->votes()->where('commenter_id', $user->id)->first();
 
-            if ($oldVoteEntity) {
-                $offset = $this->offset($oldVoteEntity->commenter_vote, $vote);
-
-                if ($oldVoteEntity && $offset) {
-                    $this->remove($oldVoteEntity);
-                }
-
-                if ($oldVoteEntity && !$offset) {
-                    $this->update($oldVoteEntity, $vote);
-                }
-
-            } else {
+            if (!$oldVoteEntity) {
                 $this->store($comment, $user, $vote);
+                return;
             }
 
+            if ($this->isUselessValue($oldVoteEntity->commenter_vote, $vote)) {
+                $this->remove($oldVoteEntity);
+                return;
+            }
+
+            $this->update($oldVoteEntity, $vote);
         });
     }
 
@@ -42,7 +38,7 @@ class VoteService
      * @param int $newVote
      * @return bool
      */
-    private function offset($oldVote, int $newVote): bool
+    private function isUselessValue($oldVote, int $newVote): bool
     {
         return ($oldVote === 0 && $newVote === 1) || ($oldVote === 1 && $newVote === 0);
     }
