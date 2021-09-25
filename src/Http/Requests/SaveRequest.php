@@ -9,7 +9,7 @@ class SaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'message' => ['required', 'string'],
+            'commentable_encrypted_key' => ['required', 'string'],
             'message' => ['required', 'string', 'max:10000']
         ];
     }
