@@ -3,14 +3,9 @@
 return [
     // The model which creates the comments aka the User model
     'models' => [
-        /**
-         * Commenter model
-         */
         'commenter' => \App\User::class,
-        /**
-         * Comment model
-         */
-        'comment' => \App\Comment::class
+        'comment' => \App\Comment::class,
+        'votes' => \tizis\laraComments\Entity\CommentVotes::class,
     ],
     'ui' => 'bootstrap4',
     'purifier' => [

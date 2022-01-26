@@ -105,7 +105,7 @@ class Comment extends Model implements CommentInterface
      */
     public function votes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CommentVotes::class, 'comment_id');
+        return $this->hasMany(config('comments.models.votes'), 'comment_id');
     }
 
     /**
@@ -114,7 +114,7 @@ class Comment extends Model implements CommentInterface
      */
     public function addNewVoteIntoRatingRecords($commenterId, $vote)
     {
-        $this->votes()->save(new CommentVotes([
+        $this->votes()->save(new (config('comments.models.votes'))([
                 'commenter_id' => $commenterId,
                 'commenter_vote' => $vote
             ]

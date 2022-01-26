@@ -2,9 +2,6 @@
 
 namespace tizis\laraComments\Traits;
 
-use tizis\laraComments\Entity\Comment;
-use tizis\laraComments\Entity\CommentVotes;
-
 /**
  * Add this trait to your User model so
  * that you can retrieve the comments for a user.
@@ -17,7 +14,7 @@ trait Commenter
      */
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Comment::class, 'commenter_id');
+        return $this->hasMany(config('comments.models.comment'), 'commenter_id');
     }
 
     /**
@@ -28,7 +25,7 @@ trait Commenter
     public function commentsWithChildrenAndCommenter(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         // 'allChildrenWithCommenter.commenter' needs for eager loading of first level Comment::class
-        return $this->hasMany(Comment::class, 'commenter_id')
+        return $this->hasMany(config('comments.models.comment'), 'commenter_id')
             ->with('allChildrenWithCommenter', 'allChildrenWithCommenter.commenter', 'commenter');
     }
 
@@ -39,6 +36,6 @@ trait Commenter
      */
     public function commentsVotes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CommentVotes::class, 'commenter_id');
+        return $this->hasMany(config('comments.models.votes'), 'commenter_id');
     }
 }

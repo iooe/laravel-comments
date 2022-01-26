@@ -3,8 +3,9 @@
 namespace tizis\laraComments\Entity;
 
 use Illuminate\Database\Eloquent\Model;
+use tizis\laraComments\Contracts\Vote;
 
-class CommentVotes extends Model
+class CommentVotes extends Model implements Vote
 {
 
     protected $fillable = ['commenter_id', 'commenter_vote'];

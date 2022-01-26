@@ -4,7 +4,7 @@ namespace tizis\laraComments\UseCases;
 
 use DB;
 use tizis\laraComments\Contracts\Comment as CommentInterface;
-use tizis\laraComments\Entity\CommentVotes;
+use tizis\laraComments\Contracts\Vote;
 
 class VoteService
 {
@@ -44,19 +44,19 @@ class VoteService
     }
 
     /**
-     * @param CommentVotes $vote
+     * @param Vote $vote
      * @throws \Exception
      */
-    private function remove(CommentVotes $vote): void
+    private function remove(Vote $vote): void
     {
         $vote->delete();
     }
 
     /**
-     * @param CommentVotes $vote
+     * @param Vote $vote
      * @param int $updatedVote
      */
-    private function update(CommentVotes $vote, int $updatedVote): void
+    private function update(Vote $vote, int $updatedVote): void
     {
         $vote->updateCommenterVote($updatedVote);
     }
