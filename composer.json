@@ -1,5 +1,5 @@
 {
-  "name": "tizis/laravel-comments",
+  "name": "buzzclue/laravel-comments",
   "description": "Comments system for your Laravel application. Features: can be used to comment on any model, HTML filter customization (HTMLPurifier), API, comment rating, replies, events, auth rules ...",
   "keywords": [
     "laravel",
